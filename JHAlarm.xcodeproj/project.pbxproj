@@ -1,0 +1,585 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0360CF582301465C00558895 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0360CF572301465C00558895 /* AppDelegate.swift */; };
+		0360CF5A2301465C00558895 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0360CF592301465C00558895 /* ViewController.swift */; };
+		0360CF5D2301465C00558895 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0360CF5B2301465C00558895 /* Main.storyboard */; };
+		0360CF5F2301465E00558895 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0360CF5E2301465E00558895 /* Assets.xcassets */; };
+		0360CF622301465E00558895 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0360CF602301465E00558895 /* LaunchScreen.storyboard */; };
+		0360CF6D2301465E00558895 /* JHAlarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0360CF6C2301465E00558895 /* JHAlarmTests.swift */; };
+		0360CF782301465E00558895 /* JHAlarmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0360CF772301465E00558895 /* JHAlarmUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0360CF692301465E00558895 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0360CF4C2301465C00558895 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0360CF532301465C00558895;
+			remoteInfo = JHAlarm;
+		};
+		0360CF742301465E00558895 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0360CF4C2301465C00558895 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0360CF532301465C00558895;
+			remoteInfo = JHAlarm;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0360CF542301465C00558895 /* JHAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JHAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0360CF572301465C00558895 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0360CF592301465C00558895 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0360CF5C2301465C00558895 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0360CF5E2301465E00558895 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0360CF612301465E00558895 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0360CF632301465E00558895 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0360CF682301465E00558895 /* JHAlarmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JHAlarmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0360CF6C2301465E00558895 /* JHAlarmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHAlarmTests.swift; sourceTree = "<group>"; };
+		0360CF6E2301465E00558895 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0360CF732301465E00558895 /* JHAlarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JHAlarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0360CF772301465E00558895 /* JHAlarmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHAlarmUITests.swift; sourceTree = "<group>"; };
+		0360CF792301465E00558895 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0360CF512301465C00558895 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0360CF652301465E00558895 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0360CF702301465E00558895 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0360CF4B2301465C00558895 = {
+			isa = PBXGroup;
+			children = (
+				0360CF562301465C00558895 /* JHAlarm */,
+				0360CF6B2301465E00558895 /* JHAlarmTests */,
+				0360CF762301465E00558895 /* JHAlarmUITests */,
+				0360CF552301465C00558895 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0360CF552301465C00558895 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0360CF542301465C00558895 /* JHAlarm.app */,
+				0360CF682301465E00558895 /* JHAlarmTests.xctest */,
+				0360CF732301465E00558895 /* JHAlarmUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0360CF562301465C00558895 /* JHAlarm */ = {
+			isa = PBXGroup;
+			children = (
+				0360CF572301465C00558895 /* AppDelegate.swift */,
+				0360CF592301465C00558895 /* ViewController.swift */,
+				0360CF5B2301465C00558895 /* Main.storyboard */,
+				0360CF5E2301465E00558895 /* Assets.xcassets */,
+				0360CF602301465E00558895 /* LaunchScreen.storyboard */,
+				0360CF632301465E00558895 /* Info.plist */,
+			);
+			path = JHAlarm;
+			sourceTree = "<group>";
+		};
+		0360CF6B2301465E00558895 /* JHAlarmTests */ = {
+			isa = PBXGroup;
+			children = (
+				0360CF6C2301465E00558895 /* JHAlarmTests.swift */,
+				0360CF6E2301465E00558895 /* Info.plist */,
+			);
+			path = JHAlarmTests;
+			sourceTree = "<group>";
+		};
+		0360CF762301465E00558895 /* JHAlarmUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0360CF772301465E00558895 /* JHAlarmUITests.swift */,
+				0360CF792301465E00558895 /* Info.plist */,
+			);
+			path = JHAlarmUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0360CF532301465C00558895 /* JHAlarm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0360CF7C2301465E00558895 /* Build configuration list for PBXNativeTarget "JHAlarm" */;
+			buildPhases = (
+				0360CF502301465C00558895 /* Sources */,
+				0360CF512301465C00558895 /* Frameworks */,
+				0360CF522301465C00558895 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JHAlarm;
+			productName = JHAlarm;
+			productReference = 0360CF542301465C00558895 /* JHAlarm.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0360CF672301465E00558895 /* JHAlarmTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0360CF7F2301465E00558895 /* Build configuration list for PBXNativeTarget "JHAlarmTests" */;
+			buildPhases = (
+				0360CF642301465E00558895 /* Sources */,
+				0360CF652301465E00558895 /* Frameworks */,
+				0360CF662301465E00558895 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0360CF6A2301465E00558895 /* PBXTargetDependency */,
+			);
+			name = JHAlarmTests;
+			productName = JHAlarmTests;
+			productReference = 0360CF682301465E00558895 /* JHAlarmTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0360CF722301465E00558895 /* JHAlarmUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0360CF822301465E00558895 /* Build configuration list for PBXNativeTarget "JHAlarmUITests" */;
+			buildPhases = (
+				0360CF6F2301465E00558895 /* Sources */,
+				0360CF702301465E00558895 /* Frameworks */,
+				0360CF712301465E00558895 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0360CF752301465E00558895 /* PBXTargetDependency */,
+			);
+			name = JHAlarmUITests;
+			productName = JHAlarmUITests;
+			productReference = 0360CF732301465E00558895 /* JHAlarmUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0360CF4C2301465C00558895 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "김제현";
+				TargetAttributes = {
+					0360CF532301465C00558895 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					0360CF672301465E00558895 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 0360CF532301465C00558895;
+					};
+					0360CF722301465E00558895 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 0360CF532301465C00558895;
+					};
+				};
+			};
+			buildConfigurationList = 0360CF4F2301465C00558895 /* Build configuration list for PBXProject "JHAlarm" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0360CF4B2301465C00558895;
+			productRefGroup = 0360CF552301465C00558895 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0360CF532301465C00558895 /* JHAlarm */,
+				0360CF672301465E00558895 /* JHAlarmTests */,
+				0360CF722301465E00558895 /* JHAlarmUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0360CF522301465C00558895 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0360CF622301465E00558895 /* LaunchScreen.storyboard in Resources */,
+				0360CF5F2301465E00558895 /* Assets.xcassets in Resources */,
+				0360CF5D2301465C00558895 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0360CF662301465E00558895 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0360CF712301465E00558895 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0360CF502301465C00558895 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0360CF5A2301465C00558895 /* ViewController.swift in Sources */,
+				0360CF582301465C00558895 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0360CF642301465E00558895 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0360CF6D2301465E00558895 /* JHAlarmTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0360CF6F2301465E00558895 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0360CF782301465E00558895 /* JHAlarmUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0360CF6A2301465E00558895 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0360CF532301465C00558895 /* JHAlarm */;
+			targetProxy = 0360CF692301465E00558895 /* PBXContainerItemProxy */;
+		};
+		0360CF752301465E00558895 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0360CF532301465C00558895 /* JHAlarm */;
+			targetProxy = 0360CF742301465E00558895 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0360CF5B2301465C00558895 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0360CF5C2301465C00558895 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0360CF602301465E00558895 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0360CF612301465E00558895 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0360CF7A2301465E00558895 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0360CF7B2301465E00558895 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0360CF7D2301465E00558895 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = JHAlarm/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kpi.jhkimAlarm.JHAlarm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0360CF7E2301465E00558895 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = JHAlarm/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kpi.jhkimAlarm.JHAlarm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0360CF802301465E00558895 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = JHAlarmTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kpi.jhkimAlarm.JHAlarmTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JHAlarm.app/JHAlarm";
+			};
+			name = Debug;
+		};
+		0360CF812301465E00558895 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = JHAlarmTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kpi.jhkimAlarm.JHAlarmTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JHAlarm.app/JHAlarm";
+			};
+			name = Release;
+		};
+		0360CF832301465E00558895 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = JHAlarmUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kpi.jhkimAlarm.JHAlarmUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = JHAlarm;
+			};
+			name = Debug;
+		};
+		0360CF842301465E00558895 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = JHAlarmUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kpi.jhkimAlarm.JHAlarmUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = JHAlarm;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0360CF4F2301465C00558895 /* Build configuration list for PBXProject "JHAlarm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0360CF7A2301465E00558895 /* Debug */,
+				0360CF7B2301465E00558895 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0360CF7C2301465E00558895 /* Build configuration list for PBXNativeTarget "JHAlarm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0360CF7D2301465E00558895 /* Debug */,
+				0360CF7E2301465E00558895 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0360CF7F2301465E00558895 /* Build configuration list for PBXNativeTarget "JHAlarmTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0360CF802301465E00558895 /* Debug */,
+				0360CF812301465E00558895 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0360CF822301465E00558895 /* Build configuration list for PBXNativeTarget "JHAlarmUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0360CF832301465E00558895 /* Debug */,
+				0360CF842301465E00558895 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0360CF4C2301465C00558895 /* Project object */;
+}
