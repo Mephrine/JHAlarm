@@ -19,7 +19,7 @@ extension Encodable {
             }
             return [:]
         } catch let e {
-            p(e.localizedDescription)
+            log.e(e.localizedDescription)
             return [:]
         }
     }
@@ -32,7 +32,7 @@ extension Encodable {
             }
             return "{}"
         } catch let e {
-            p(e.localizedDescription)
+            log.e(e.localizedDescription)
             return "{}"
         }
     }
@@ -44,7 +44,7 @@ extension Dictionary {
         do {
             return try JSONDecoder().decode(T.self, from: self.json().data(using: .utf8)!)
         } catch let e {
-            p(e.localizedDescription)
+            log.e(e.localizedDescription)
             return nil
         }
     }
@@ -57,7 +57,7 @@ extension Dictionary {
             }
             return "{}"
         } catch let e {
-            p(e.localizedDescription)
+            log.e(e.localizedDescription)
             return "{}"
         }
     }

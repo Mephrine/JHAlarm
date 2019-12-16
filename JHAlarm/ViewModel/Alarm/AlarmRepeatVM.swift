@@ -12,20 +12,46 @@ import RxCocoa
 
 class AlarmRepeatVM {
     var disposeBag = DisposeBag()
-    var manageCheckWeek: [Int]
+    var manageCheckWeek = [Weekend]()
     
-    init(checkedWeek: [Int]) {
+    
+    // Send Detail to List
+    let task = PublishSubject<[Weekend]>()
+    
+    init(checkedWeek: [Weekend]) {
         self.manageCheckWeek = checkedWeek
+    }
+    
+    func setChecked(tag: Int) -> Bool {
+        let nTag = tag % 100
+        for day in self.manageCheckWeek {
+            if day.rawValue == nTag {
+                self.manageCheckWeek = self.manageCheckWeek.removed(day)
+                return false
+            }
+        }
+        self.manageCheckWeek.append(Weekend(rawValue: nTag)!)
+        return true
     }
     
     func isChecked(tag: Int) -> Bool {
         for day in self.manageCheckWeek {
-            if day == tag {
-                self.manageCheckWeek.removed(day)
-                return false
+            if day.rawValue == tag {
+                return true
             }
         }
-        self.manageCheckWeek.append(tag)
-        return true
+        return false
+    }
+    
+    func isCheckedColor(checked: Bool) -> UIColor {
+        if checked {
+            return COLOR_NORMAL_ACTIVE_FONT
+        } else {
+            return COLOR_NORMAL_DEACTIVE_FONT
+        }
+    }
+    
+    func sendCheckedData() {
+        self.task.onNext(manageCheckWeek.sorted{ $0.rawValue < $1.rawValue })
     }
 }

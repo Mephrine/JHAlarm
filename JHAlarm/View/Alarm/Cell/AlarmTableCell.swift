@@ -9,6 +9,8 @@
 import UIKit
 //import SwipeCellKit
 import Reusable
+import RealmSwift
+import RxSwift
 
 final class AlarmTableCell: UITableViewCell, NibReusable {
     
@@ -27,16 +29,25 @@ final class AlarmTableCell: UITableViewCell, NibReusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
+        self.selectionStyle = .none
     }
     
     func configure(_ data: AlarmModel) {
+        let isUsed = data.used
+        if isUsed {
+            
+        } else {
+            
+        }
+        self.lbMeridiem.text = data.date.dateSymbol
+        self.lbTime.text = data.date.time
+        self.swAlarm.isOn = isUsed
+        let imgOnOff = isUsed ? "_on" : "_off"
+        if let missionNm = data.mission?.wakeMission.getImgName() {
+            self.imgMission.image = UIImage(named: #"\#(missionNm)\#(imgOnOff)"#)
+        }
         
+        self.choiceDay(dates: data.repetition)
     }
     
     func configure(_ data: String) {
@@ -45,8 +56,24 @@ final class AlarmTableCell: UITableViewCell, NibReusable {
         }
     }
     
+    func choiceDay(dates: List<Int>) {
+//        dates.forEach({ dateInt in
+        for view in self.stvDay.arrangedSubviews {
+            if let childView = view as? UILabel {
+                let dateHashValue = view.tag - 100
+                let isChoice = Array(dates).map{ dateHashValue == $0 }.filter { $0 }.first ?? false
+                
+                if isChoice {
+                    childView.setFontBold(17, .white)
+                } else {
+                    childView.setFontRegular(17, .lightGray)
+                }
+            }
+        }
+    }
+    
     @IBAction func ChangeSwitchAlarm(_ sender: Any) {
-        
+        self.swAlarm.isOn = !self.swAlarm.isOn
     }
     
 }

@@ -7,3 +7,18 @@
 //
 
 import Foundation
+import RxSwift
+
+protocol HasAppService {
+    var appService: AppService { get }
+}
+
+class AppService {
+    
+}
+
+extension AppService: ReactiveCompatible {}
+
+extension Reactive where Base: AppService {
+    
+}

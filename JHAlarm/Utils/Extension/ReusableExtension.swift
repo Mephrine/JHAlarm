@@ -1,9 +1,20 @@
 //
-//  ReusableExtension.swift
-//  JHAlarm
+//  Reusable+Rx.swift
+//  CWUtils
 //
-//  Created by 김제현 on 09/09/2019.
-//  Copyright © 2019 김제현. All rights reserved.
+//  Created by iamchiwon on 09/02/2019.
 //
 
-import Foundation
+import Reusable
+import RxSwift
+import UIKit
+
+public extension Reactive where Base: UITableView {
+    func items<S: Sequence, T: UITableViewCell, O: ObservableType>(cellType: T.Type)
+        -> (_ source: O)
+        -> (_ configureCell: @escaping (Int, S.Iterator.Element, T) -> Void)
+        -> Disposable
+        where O.E == S, T: Reusable {
+            return items(cellIdentifier: T.reuseIdentifier, cellType: cellType)
+    }
+}

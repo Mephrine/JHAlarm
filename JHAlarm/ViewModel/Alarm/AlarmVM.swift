@@ -13,36 +13,31 @@ import RealmSwift
 import RxRealm
 import CoreLocation
 import SPPermission
-import Moya_SwiftyJSONMapper
 import Moya
 import Alamofire
 import SwiftyJSON
+import RxFlow
+//import NVActivityIndicatorView
 
-class AlarmVM {
-    var disposeBag = DisposeBag()
-    var getLocCnt = 0
+class AlarmVM: Stepper {
+    var steps = PublishRelay<Step>()
     
-    //Realm
-    var schedules: Results<AlarmModel>? {
-        get {
-            return manager.select(modelType: AlarmModel.self)
-        }
-    }
-
-    var manager = RealmManager()
-    
-    var weatherData = PublishRelay<Weather>()
-    
-    // Realm에서 데이터 조회해오기
-//    func requestAlarmData() {
-//        schedules = manager.readData(modelType: AlarmModel.self)
-//        print("Realm : \(Realm.Configuration.defaultConfiguration)")
-//        print("object count : \(schedules?.count)")
-//        schedules.accept(["A", "B", "C"])
-
+//    var onShowLoading: Observable {
+//
 //    }
-
+//    func showIndicator(_ showing: Bool){
+//        if showing {
+//            let size = CGSize(width: 30, height: 30)
+//            startAnimating(size, message: "Loading...", type: NVActivityIndicatorType(rawValue: 29)!)
+//        } else {
+//            self.stopAnimating()
+//        }
+//    }
     
+   
+    
+    // MARK: realm
+    let manager = RealmManager.shared
     
     func inputData(data: AlarmModel) {
         manager.insert(data: data)
@@ -52,23 +47,73 @@ class AlarmVM {
         manager.delete(data: data)
     }
     
+    //TODO: Mephrine - update도 추가해야함.
+    //Realm
+    var alarmSchedule: Observable<(AnyRealmCollection<AlarmModel>, RealmChangeset?)>  {
+        return Observable.changeset(from: schedule).share()
+    }
+    
+    var schedule: Results<AlarmModel> {
+        return manager.select()
+    }
+    
+//    var alarmSchedule: Observable<[AlarmModel]> {
+//        return Observable.of(manager.select().map{ $0 })
+//    }
+    
+    // API Repeat Count
+    var getLocCnt = 0
+    // DisposeBag
+    var disposeBag = DisposeBag()
+    
+    var weatherData = PublishRelay<Weather>()
+    let isLoading = BehaviorRelay<Bool>(value: false)
+    
+    let reloadData = BehaviorRelay<Bool>(value: false)
+    
+    var isEditing = BehaviorRelay<Bool>(value: false)
+    
+    init() {
+           self.requestGetWeather()
+       }
+    
     //MARK: LOCATION PERMISSION
-    func getLocation(_ completion: @escaping ([String: String]?)->()) {
-        if SPPermission.isAllowed(.locationWhenInUse) || SPPermission.isAllowed(.locationAlwaysAndWhenInUse) {
-            completion(getLocationInfo())
-        } else {
-            SPPermission.request(.locationWhenInUse) {[weak self] in
-                if SPPermission.isAllowed(.locationWhenInUse) {
-                    if let _self = self {
-                        completion(_self.getLocationInfo())
+    func getLocation() -> Observable<[String: String]?> {
+        return Observable.create {[unowned self] (observer) -> Disposable in
+            if SPPermission.isAllowed(.locationWhenInUse) || SPPermission.isAllowed(.locationAlwaysAndWhenInUse) {
+                observer.onNext(self.getLocationInfo())
+                observer.onCompleted()
+            } else {
+                SPPermission.request(.locationWhenInUse) {[unowned self] in
+                    if SPPermission.isAllowed(.locationWhenInUse) {
+                        observer.onNext(self.getLocationInfo())
+                        observer.onCompleted()
+                    } else {
+                        observer.onNext(nil)
+                        observer.onCompleted()
                     }
-                } else {
-                    completion(nil)
                 }
-                
             }
+            return Disposables.create()
         }
     }
+    
+    //        func getLocation(_ completion: @escaping ([String: String]?)->()) {
+    //            if SPPermission.isAllowed(.locationWhenInUse) || SPPermission.isAllowed(.locationAlwaysAndWhenInUse) {
+    //                completion(getLocationInfo())
+    //            } else {
+    //                SPPermission.request(.locationWhenInUse) {[weak self] in
+    //                    if SPPermission.isAllowed(.locationWhenInUse) {
+    //                        if let _self = self {
+    //                            completion(_self.getLocationInfo())
+    //                        }
+    //                    } else {
+    //                        completion(nil)
+    //                    }
+    //
+    //                }
+    //            }
+    //        }
     
     func getLocationInfo() -> [String: String]? {
         if getLocCnt < 3 {
@@ -88,45 +133,103 @@ class AlarmVM {
                 return ["lat":latitude, "lon": longitude]
             }
         }
-        
-        
-            
         return nil
     }
     
-    //test
+    
     func requestGetWeather() {
-        getLocation {[weak self] data in
-            if let _self = self {
+        //ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+        let backgroundScheduler = ConcurrentDispatchQueueScheduler.init(qos: .background)
+        
+        getLocation()
+            .subscribeOn(MainScheduler.instance)
+            .do(onNext: {[unowned self] data in
+                self.isLoading.accept(true)
+            })
+            .observeOn(backgroundScheduler)
+            .subscribe(onNext: {[unowned self] (data) in
                 if let location = data {
                     let lat:String = location["lat"] ?? "0"
                     let lon:String = location["lon"] ?? "0"
                     print("location : lat : \(lat) | lon : \(lon)")
-                    callProvider.rx.request(.GetWeather(lat: lat, lon: lon)).retry(3).debug().subscribe {[weak self] event in
-                        if let _self = self {
-                            switch event {
-                            case let .success(response):
-                                do {
-                                    let json = try JSON(data:response.data)
-                                    if let data = Weather.init(jsonData: json) {
-                                        _self.weatherData.accept(data)
-                                    }
-                                } catch {
-                                    print("parsing error")
+                    let test = callProvider.rx.request(.GetWeather(lat: lat, lon: lon))
+                    
+                    test.subscribe {[unowned self] event in
+                        switch event {
+                        case let .success(response):
+                            do {
+                                let json = try JSON(data:response.data)
+                                if let data = Weather.init(jsonData: json) {
+                                    self.weatherData.accept(data)
                                 }
-                                
-                                break
-                            case let .error(error):
-                                print("network error : \(error)")
-                                break
+                            } catch {
+                                print("parsing error")
                             }
+                            self.isLoading.accept(false)
+                            break
+                        case let .error(error):
+                            print("network error : \(error)")
+                            self.isLoading.accept(false)
+                            break
                         }
-                        } .disposed(by: _self.disposeBag)
+                    } .disposed(by: self.disposeBag)
+                } else {
+                    CommonAlert.showAlertType1(title: "", message: "위치 동의를 해주셔야 날씨 정보를 받아올 수 있습니다.")
                 }
-            }
-        }
-        
+            }).disposed(by: disposeBag)
     }
     
     
+    func requestWeather(_ data: [String :String]?) -> Single<Response> {
+        let lat:String = data?["lat"] ?? "0"
+        let lon:String = data?["lon"] ?? "0"
+        
+        return callProvider.rx.request(.GetWeather(lat: lat, lon: lon))
+            
+//            .subscribe {[unowned self] event in
+//            switch event {
+//            case let .success(response):
+//                do {
+//                    let json = try JSON(data:response.data)
+//                    if let data = Weather.init(jsonData: json) {
+//                        self.weatherData.accept(data)
+//                    }
+//                } catch {
+//                    print("parsing error")
+//                }
+//
+//                break
+//            case let .error(error):
+//                print("network error : \(error)")
+//                break
+//            }
+//        } .disposed(by: self.disposeBag)
+    }
+    
+    // MARK: Move
+    func goEditAlarmDetail(model: AlarmModel?) {
+        if let existModel = model {
+            self.steps.accept(AppStep.selectAlarmEdit(data: existModel))
+        } else {
+            goNewAlarmDetail()
+        }
+    }
+    
+    func goNewAlarmDetail() {
+        let viewModel = AlarmDetailVM(schedule: nil)
+        viewModel.task.map { _ in true }
+            .bind(to: self.reloadData)
+            .disposed(by: disposeBag)
+        
+        self.steps.accept(AppStep.clickNewAlarm(viewModel: viewModel))
+    }
+    
+    func deleteRow(index: Int) {
+        let alarmModel = schedule[index]
+        RealmManager.shared.delete(data: alarmModel)
+    }
+    
+    func deleteModel(model: AlarmModel) {
+        RealmManager.shared.delete(data: model)
+    }
 }

@@ -6,4 +6,9 @@
 //  Copyright © 2019 김제현. All rights reserved.
 //
 
-import Foundation
+import RxCocoa
+import UICollectionViewFlexLayout
+
+extension RxCollectionViewDelegateProxy: UICollectionViewDelegateFlexLayout {
+}
+

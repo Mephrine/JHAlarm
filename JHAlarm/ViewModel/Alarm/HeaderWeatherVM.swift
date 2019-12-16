@@ -7,3 +7,19 @@
 //
 
 import Foundation
+import RxSwift
+
+class HeaderWeatherVM {
+    var weatherText = ""
+    var imgWeatherURL: URL?
+    
+    var isShown: Bool = false
+    
+    init(_ text: String, _ url: URL?) {
+        self.weatherText = text
+        self.imgWeatherURL = url
+        self.isShown = true
+    }
+    
+}
+

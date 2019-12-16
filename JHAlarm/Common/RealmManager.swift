@@ -14,51 +14,76 @@ import UIKit
 
 
 class RealmManager: NSObject {
-    var realm: Realm?
+    static let shared = RealmManager()
+    private var realm: Realm?
+    let name = "com.adcapsule.jhkimTest.RealmManager"
     
-    private func chkRealm() -> Realm? {
+    func chkRealm() -> Realm {
         if realm == nil {
-            realm = try? Realm()
+//            let configuration = Realm.Configuration()
+            realm = try! Realm()
         }
-        return realm
+        return realm!
     }
+       
+    // Realm에서 데이터 조회해오기
+//    func select<T>(modelType: T.Type, sortKey: String? = nil, isAscending: Bool = true) -> Results<T> {
+//        if let db = chkRealm() {
+//            if let mType = modelType as? Object.Type {
+//                if let key = sortKey {
+//                    return (db.objects(mType) as! Results<T>).sorted(byKeyPath: key, ascending: isAscending)
+//                } else {
+//                    return db.objects(mType) as! Results<T>
+//                }
+//            }
+//        }
+//    }
     
     // Realm에서 데이터 조회해오기
-    func readData<T>(modelType: T.Type, sortKey: String? = nil, isAscending: Bool = true) -> Results<T>? {
-        if let db = chkRealm() {
-            if let mType = modelType as? Object.Type {
-                if let key = sortKey {
-                    return (db.objects(mType) as? Results<T>)?.sorted(byKeyPath: key, ascending: isAscending)
-                } else {    
-                    return db.objects(mType) as? Results<T>
-                }
-            }
+    func select<T: AlarmModel>(sortKey: String? = nil, isAscending: Bool = true) -> Results<T> {
+        let db = chkRealm()
+        
+        if let key = sortKey {
+            return db.objects(T.self).sorted(byKeyPath: key, ascending: isAscending)
+        } else {
+            return db.objects(T.self)
         }
-        return nil
     }
     
-    func inputData(data: AlarmModel) {
-        if let db = chkRealm() {
-            do {
+    func insert(data: Object) {
+        let db = chkRealm()
+        do {
                 try db.write {
                     db.add(data)
                 }
             } catch {
-                p("realm input error")
+                log.e("realm input error")
             }
-        }
+        
     }
     
-    func deleteData(data: AlarmModel) {
-        if let db = chkRealm() {
+//    func update(data: Object) {
+//        if let db = chkRealm() {
+//            do {
+//                try db.write {
+//                    data
+//                }
+//            } catch {
+//                p("realm input error")
+//            }
+//        }
+//    }
+    
+    func delete(data: Object) {
+      let db = chkRealm()
             do {
                 try db.write {
                     db.delete(data)
                 }
             } catch {
-                p("realm delete error")
+                log.e("realm delete error")
             }
-        }
+        
     }
     
 //    func updateData(data: AlarmModel) {

@@ -11,9 +11,9 @@ import RxCocoa
 import RxSwift
 import RxRealm
 import RealmSwift
-import Moya_SwiftyJSONMapper
 import Moya
 import Kingfisher
+import RxRealmDataSources
 
 class AlarmVC: BaseVC {
     // View
@@ -28,11 +28,11 @@ class AlarmVC: BaseVC {
     var previousScrollOffset: CGFloat = 0.0
     
     @IBOutlet var btnPlus: UIButton!
+    @IBOutlet weak var btnEdit: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.requestGetWeather()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,130 +49,199 @@ class AlarmVC: BaseVC {
     
     // 뷰 초기 작업 관련
     override func initView() {
-        // 테이블뷰 만들기.
-        tbAlarm = createView(UITableView(), parent: self.view, setting: { (tableView) in
-            tableView.rowHeight = UITableView.automaticDimension
-            tableView.estimatedRowHeight = 100
-            tableView.register(UINib.init(nibName: "AlarmTableCell", bundle: nil), forCellReuseIdentifier: "AlarmTableCell")
-            tableView.separatorStyle = .none
-            tableView.delegate = self
-            tableView.backgroundColor = .clear
-            if #available(iOS 11.0, *) {
-                tableView.contentInsetAdjustmentBehavior = .never
+        if tbAlarm == nil {
+            // 테이블뷰 만들기.
+            tbAlarm = UITableView().then { tableView in
+                tableView.rowHeight = UITableView.automaticDimension
+                tableView.estimatedRowHeight = 100
+                tableView.register(UINib.init(nibName: "AlarmTableCell", bundle: nil), forCellReuseIdentifier: "AlarmTableCell")
+                tableView.separatorStyle = .none
+                tableView.delegate = self
+                tableView.backgroundColor = .clear
+                tableView.isScrollEnabled = true
+                tableView.bounces = true
+                tableView.allowsSelectionDuringEditing = true
+                
+                if #available(iOS 11.0, *) {
+                    tableView.contentInsetAdjustmentBehavior = .never
+                }
             }
-            
-            self.view.bringSubviewToFront(self.btnPlus)
-        }, constraint: { [weak self] in
-            if let _self = self {
-                $0.top.equalTo(_self.headerView.snp.bottom)
-                $0.left.bottom.right.equalToSuperview()
-            }
-        })
+        }
         
-        vHeaderWeather = UINib.init(nibName: "HeaderWeatherView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? HeaderWeatherView
+        if !Global.findView(superView: self.view, findView: tbAlarm, type: UITableView.self) {
+            self.view.addSubview(tbAlarm)
+            
+            tbAlarm.snp.makeConstraints { [weak self] in
+                if let _self = self {
+                    $0.top.equalTo(_self.headerView.snp.bottom)
+                    $0.left.bottom.right.equalToSuperview()
+                }
+            }
+        }
+        
+        self.view.bringSubviewToFront(self.btnPlus)
+        
+//        tbAlarm = createView(UITableView(), parent: self.view, setting: { (tableView) in
+//            tableView.rowHeight = UITableView.automaticDimension
+//            tableView.estimatedRowHeight = 100
+//            tableView.register(UINib.init(nibName: "AlarmTableCell", bundle: nil), forCellReuseIdentifier: "AlarmTableCell")
+//            tableView.separatorStyle = .none
+////            tableView.delegate = self
+//            tableView.backgroundColor = .clear
+//            tableView.isScrollEnabled = true
+//            tableView.bounces = true
+//
+//            if #available(iOS 11.0, *) {
+//                tableView.contentInsetAdjustmentBehavior = .never
+//            }
+//
+//
+//        }, constraint: { [weak self] in
+//            if let _self = self {
+//                $0.top.equalTo(_self.headerView.snp.bottom)
+//                $0.left.bottom.right.equalToSuperview()
+//            }
+//        })
     }
+    /**
+     
+     */
     
     // 뷰 바인딩하기.
     override func setBind() {
-        // cellForItemAt
-        
-        // 알람 목록 바인딩
-        if let data = viewModel.schedules {
-            // datasource 작성.
-            //        let dataSource = RxTableViewSectionedReloadDataSource<String>.init(configureCell: { (dataSource, tableView, indexPath, item) -> UITableViewCell in
-            //            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmTableCell", for: indexPath) as? AlarmTableCell else { return UITableViewCell()}
-            //            cell.setData(item)
-            //            return cell
-            //        })
-            //        (
-            //            configureCell: { dataSource, tableView, indexPath, item in
-            //                guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmTableCell", for: indexPath) as? AlarmTableCell else { return UITableViewCell()}
-            //                cell.setData(item)
-            //                return cell
-            //            })
-            //viewForFooterInSection
-            let objArray = Observable.just(data)
-            //            data.rx.obser
-            
-            objArray.bind(to: tbAlarm.rx.items(cellIdentifier: "AlarmTableCell")) { row, element, cell in
-                if let usedCell = cell as? AlarmTableCell {
-                    usedCell.configure(element)
-                }
-                }.disposed(by: disposeBag)
-            
-            
-            //            objArray.bind(to: tbAlarm.rx.items(cellIdentifier: "cell", cellType: UITableViewCell.self)) { (row, element, cell) in
-            //                    cell.configure(element)
-            //                }.disposed(by: disposeBag)
-            
-            //            Observable.just(data)
-            //                .observeOn(MainScheduler.instance)
-            //                .bind(to: tbAlarm.rx.items(cellIdentifier: "AlarmTableCell", cellType: AlarmTableCell.self)) { (row, element, cell) in
-            //                    cell.setData(element)
-            //                }.disposed(by: disposeBag)
-            //
-            
-            //            Observable.collection(from: data)
-            //                .observeOn(MainScheduler.instance)
-            //                .bind(to: tbAlarm.rx.items(cellIdentifier: "AlarmTableCell", cellType: AlarmTableCell.self)) { (row, element, cell) in
-            //                cell.setData(element)
-            //            }.disposed(by: disposeBag)
-            
-            // FooterView
-            tbAlarm.rx.setDelegate(self)
-                .disposed(by: disposeBag)
-            
-            
-            /*
-             
-             tbAlarm.rx.itemSelected
-             .asDriver()
-             .map{ $0.row }
-             .withLatestFrom(data, resultSelector: {
-             
-             })
-             .drive(onNext: { (index) in
-             
-             }, onCompleted: {
-             
-             })
-             .disposed(by: disposeBag)
-             }
-             */
-            
-            tbAlarm.rx.modelSelected(AlarmModel.self)
-                .throttle(0.5, scheduler: MainScheduler.instance)
-                .subscribe({ (item) in
-                    MoveManager.alarmDetailPage(isPush: true, item.element)
-                })
-                .disposed(by: disposeBag)
-            
-            //            tbAlarm.rx.itemSelected
-            //                .map{ $0.row }
-            //                .withLatestFrom(data, resultSelector: {
-            //                    $0
-            //                })
-            //                .drive(onNext: { (index) in
-            //                    <#code#>
-            //                }, onCompleted: {
-            //                    <#code#>
-            //                })
-            //                .disposed(by: disposeBag)
+        /// dataSource
+        let realmDataSource = RxTableViewRealmDataSource<AlarmModel>.init(cellIdentifier: "AlarmTableCell", cellType: AlarmTableCell.self) { cell, indexPath, item in
+            cell.configure(item)
         }
         
-    }
-}
+        /// Loading
+        viewModel.isLoading.subscribe(onNext: { [weak self] isLoading in
+            if let _self = self {
+                _self.showIndicator(isLoading)
+            }
+            }).disposed(by: disposeBag)
+        
+        /// 191206
+        viewModel.alarmSchedule
+            .bind(to: tbAlarm.rx.realmChanges(realmDataSource))
+            .disposed(by: disposeBag)
+        
+        viewModel.alarmSchedule
+            .subscribeOn(Schedulers.main)
+            .subscribe(onNext: { [weak self] in
+                guard let _self = self else { return }
+                let cnt = $0.0.count
+                if cnt > 0 {
+                    _self.btnEdit.isHidden = false
+                    _self.setNoDataView(isShow: false)
+                } else {
+                    _self.btnEdit.isHidden = true
+                    _self.setNoDataView(isShow: true)
+                }
+               
+            }) .disposed(by: disposeBag)
+                   
+        
+        log.d("self.viewModel.alarmSchedule : \(self.viewModel.alarmSchedule.count())")
+//        self.viewModel.alarmSchedule.count()
+//            .map { $0 > 0 }
+//            .bind(to: self.btnEdit.rx.isHidden)
+//            .disposed(by: disposeBag)
+//
+//        self.viewModel.alarmSchedule.count()
+//            .map { $0 == 0 }
+//            .subscribeOn(Schedulers.main)
+//            .subscribe(onNext: { [weak self] in
+//                self?.setNoDataView(isShow: $0)
+//            })
+//        .disposed(by: disposeBag)
+        
+        
+        self.tbAlarm.rx.realmModelSelected(AlarmModel.self)
+            .asDriver()
+            .drive(onNext : { [weak self] in
+                self?.viewModel.goEditAlarmDetail(model: $0)
+            })
+            .disposed(by: disposeBag)
+       
+        self.tbAlarm.rx.itemDeleted.asDriver()
+            .drive(onNext: { [weak self] indexPath in
+                guard let _self = self else { return }
+                let index = indexPath.row
+                _self.viewModel.deleteRow(index: index)
+                // Delete the row from the data source
+                _self.tbAlarm.beginUpdates()
+                _self.tbAlarm.deleteRows(at: [indexPath], with: .middle)
+                _self.tbAlarm.endUpdates()
+                Scheduler.shared.reSchedule()
+            })
+            .disposed(by: disposeBag)
+        
+                
+        self.viewModel.isEditing.asDriver()
+        .drive(onNext: { [weak self] in
+            guard let _self = self else { return }
+            if $0 {
+                _self.btnEdit.setTitle("Done", for: .normal)
+                _self.tbAlarm.setEditing(true, animated: true)
+            } else {
+                _self.btnEdit.setTitle("Edit", for: .normal)
+                _self.tbAlarm.setEditing(false, animated: true)
+            }
+        }).disposed(by: disposeBag)
+            
+        btnPlus.rx.tap.asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                guard let _self = self else { return }
+                _self.viewModel.goNewAlarmDetail()
+            }, onCompleted: {
+                
+            }) {
+                
+        }.disposed(by: disposeBag)
+        
+        
+        viewModel.weatherData.subscribe(onNext: { [weak self] (weatherData) in
+            guard let _self = self else { return }
+            _self.vHeaderWeather = UINib.init(nibName: "HeaderWeatherView", bundle: nil).instantiate(withOwner: nil, options: nil).first as? HeaderWeatherView
 
-extension AlarmVC {
-    @IBAction func btnPlusPressed(_ sender: Any) {
-        MoveManager.alarmDetailPage(isPush: true)
+            let url = weatherData.weather?.first?.icon
+            let text = "\(weatherData.main?.tempMin ?? "")~\(weatherData.main?.tempMax ?? "")"
+            _self.vHeaderWeather?.viewModel = HeaderWeatherVM.init(text, url)
+            _self.tbAlarm.reloadData()
+        }).disposed(by: disposeBag)
+        
+        
+//        self.tbAlarm.rx.setDelegate(self)
+//        .disposed(by: disposeBag)
+        
+    }
+    
+    func setNoDataView(isShow: Bool) {
+        if isShow {
+            if let noDataView = Bundle.main.loadNibNamed("NoDataView", owner: nil, options: nil)?.first as? NoDataView {
+                noDataView.tag = 900
+                self.view.addSubview(noDataView)
+                noDataView.snp.makeConstraints {
+                    $0.top.left.bottom.right.equalTo(self.tbAlarm)
+                }
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            if let noDataView = self.view.viewWithTag(900) as? NoDataView {
+                noDataView.removeFromSuperview()
+            }
+        }
+         
     }
 }
 
 // MARK: - 일반 함수
 extension AlarmVC {
     
-    
+    @IBAction func tapBtnEdit(_ sender: Any) {
+        viewModel.isEditing.accept(!viewModel.isEditing.value)
+    }
     
 }
 
@@ -181,35 +250,51 @@ extension AlarmVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // 헤더뷰 설정.
         if let header = self.vHeaderWeather {
-                viewModel.weatherData.subscribe(onNext: { (weatherData) in
-                    header.ivWeather.kf.setImage(with: weatherData.weather?.first?.icon)
-                    header.lbWeather.text = "\(weatherData.main?.tempMin ?? "")~\(weatherData.main?.tempMax ?? "")"
-                    }).disposed(by: disposeBag)
+            header.configure()
             return header
         }
-        
+
         return nil
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if self.viewModel.schedules == nil || self.viewModel.schedules?.count == 0 {
-            if let view = Bundle.main.loadNibNamed("NoDataView", owner: nil, options: nil)?.first as? NoDataView {
-                return view
+        if let header = self.vHeaderWeather {
+            if header.viewModel.isShown {
+                return 60
             }
-        }
-        return nil
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if self.viewModel.schedules == nil || self.viewModel.schedules?.count == 0 {
-            return 300
         }
         return 0
     }
+    
+    // Override to support editing the table view.
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            let index = indexPath.row
+//            self.viewModel.deleteRow(index: index)
+//            // Delete the row from the data source
+//            self.tbAlarm.beginUpdates()
+//            self.tbAlarm.deleteRows(at: [indexPath], with: .middle)
+//            self.tbAlarm.endUpdates()
+//            Scheduler.shared.reSchedule()
+//            self.tbAlarm.reloadData()
+//        }
+//    }
+
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        if self.viewModel.schedules == nil || self.viewModel.schedules.count == 0 {
+//            if let view = Bundle.main.loadNibNamed("NoDataView", owner: nil, options: nil)?.first as? NoDataView {
+//                return view
+//            }
+//        }
+//        return nil
+//    }
+
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        if self.viewModel.schedules.count == 0 {
+//            return 300
+//        }
+//        return 0
+//    }
 }
 
 
@@ -223,12 +308,11 @@ extension AlarmVC: UIScrollViewDelegate {
             vc.animShowFooter()
         }
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         // 스클롤 이동중 : 헤더 이동
 //        self.previousScrollOffset = self.headerView.scrollViewDidScroll(tableView: self.tbAlarm, previousScrollOffset: self.previousScrollOffset)
-        
+
     }
 }
 

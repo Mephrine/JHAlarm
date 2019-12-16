@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+public extension UIStackView {
+    func removeAllArrangedSubview() {
+        arrangedSubviews.forEach({ child in
+            self.removeArrangedSubview(child)
+            child.removeFromSuperview()
+        })
+    }
+}
+

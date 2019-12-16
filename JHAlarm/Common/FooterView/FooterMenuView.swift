@@ -6,7 +6,7 @@
 //  Copyright © 2019 김제현. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class FooterMenuView: FooterView {
     
@@ -14,12 +14,12 @@ class FooterMenuView: FooterView {
     @IBOutlet weak var menuStackView: UIStackView!
     @IBOutlet weak var borderLine: UIView!
     
+    @IBOutlet var constFooterHeight: NSLayoutConstraint!
     var indicatorBar: UIView?
     var menuBtnHandler:((Int) -> Void)?
     
     // 공통푸터 생성
-    static func initView(_ view:UIView, item: MvgModeConfig?, menuBtnHandler:((Int) -> Void)?) -> FooterMenuView {
-        
+    static func initView(_ view:UIView, menuBtnHandler:((Int) -> Void)?) -> FooterMenuView {
         let footer = UINib(nibName: "FooterMenuView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! FooterMenuView
         view.addSubview(footer)
         
@@ -31,97 +31,35 @@ class FooterMenuView: FooterView {
         
         footer.menuBtnHandler = menuBtnHandler
         
-        let themeIndex = MenuConfig.Theme.rawValue
-        footer.selectTab(item: item, index: themeIndex)
-        footer.setTabTheme(item: item)
+        let themeIndex = MenuConfig.Alarm.rawValue
+        footer.selectTab(index: themeIndex)
         
         return footer
     }
     
     func initIndicatorBar() {
         self.indicatorBar = UIView()
-        
+
         if let indicatorBar = self.indicatorBar {
             self.addSubview(indicatorBar)
             
             indicatorBar.snp.makeConstraints { (make) in
                 make.top.equalTo(self)
-                make.left.right.equalTo(self.menuStackView.subviews[MenuConfig.Theme.rawValue])
+                make.left.right.equalTo(self.menuStackView.subviews[MenuConfig.Alarm.rawValue])
                 make.height.equalTo(3)
             }
         }
     }
     
-    func selectTab(item: MvgModeConfig?, index: Int) {
-        guard let object = item else {
-            return
-        }
-        self.initTabImage(item: object)
-        self.activeTabImage(item: object, index: index)
+    func selectTab(index: Int) {
+        self.initTabImage()
+        self.activeTabImage(index: index)
     }
     
-    /// 일반회원/MVG 회원 구분 별
-    func setTabTheme(item: MvgModeConfig?) {
-        guard let object = item else {
-            return
-        }
-        self.backgroundColor               = object.getTabBgColor()
-        self.indicatorBar?.backgroundColor = object.getTabIndicatorColor()
-        self.borderLine.backgroundColor    = object.getTabBorderColor()
-    }
-    
-    /// 엘패스 터치 시
-    @IBAction func lpassPressed(_ sender: Any) {
+    /// 알람 터치 시
+    @IBAction func menuPressed(_ sender: Any) {
         /// GA Event 코드
-        CommonGoogleAnalytics.sendEventTracking("A0022", "U", "U", "U", "U", "APP_공통", "하단고정메뉴", "멀티패스", "")
-        if let handler = self.menuBtnHandler {
-            guard let button = sender as? UIButton else {
-                return
-            }
-            handler(button.tag)
-        }
-    }
-    
-    /// 지점메인 터치 시
-    @IBAction func branchPressed(_ sender: Any) {
-        /// GA Event 코드
-        CommonGoogleAnalytics.sendEventTracking("A0016", "U", "U", "U", "U","APP_공통", "하단고정메뉴", "지점", "")
-        if let handler = self.menuBtnHandler {
-            guard let button = sender as? UIButton else {
-                return
-            }
-            handler(button.tag)
-        }
-    }
-    
-    /// 테마 터치 시
-    @IBAction func themePressed(_ sender: Any) {
-        /// GA Event 코드
-        CommonGoogleAnalytics.sendEventTracking("A0009", "U", "U", "U", "U","APP_공통", "하단고정메뉴", "테마", "")
-        if let handler = self.menuBtnHandler {
-            guard let button = sender as? UIButton else {
-                return
-            }
-            handler(button.tag)
-        }
-    }
-    
-    /// 통합검색 터치 시
-    @IBAction func searchPressed(_ sender: Any) {
-        /// GA Event 코드
-        CommonGoogleAnalytics.sendEventTracking("A0007", "U", "U", "U", "U","APP_공통", "하단고정메뉴", "검색", "")
-        if let handler = self.menuBtnHandler {
-            guard let button = sender as? UIButton else {
-                return
-            }
-            handler(button.tag)
-        }
-    }
-    
-    /// GNB 터치 시
-    @IBAction func gnbPressed(_ sender: Any) {
-        /// GA Event 코드
-        CommonGoogleAnalytics.sendEventTracking("A0008", "U", "U", "U", "U","APP_공통", "하단고정메뉴", "전체메뉴", "")
+        
         if let handler = self.menuBtnHandler {
             guard let button = sender as? UIButton else {
                 return
@@ -153,22 +91,51 @@ extension FooterMenuView {
         }
     }
     
-    func initTabImage(item: MvgModeConfig) {
+    func initTabImage() {
         for i in 0 ..< self.menuStackView.subviews.count {
-            let imageName = item.getTabImageName(index: i)
+            let imageName = getTabImageName(index: i) + "_off"
             
-            let button = (self.menuStackView.subviews[i]).subviews.first as! UIButton
-            button.setImage(UIImage(named: imageName), for: .normal)
+            if let img = (self.menuStackView.subviews[i]).subviews.first as? UIImageView {
+                img.image = UIImage(named: imageName)
+            }
         }
     }
     
-    func activeTabImage(item: MvgModeConfig, index: Int) {
-        let imageName = item.getTabImageName(index: index) + "_fill"
+    func activeTabImage(index: Int) {
+        let imageName = getTabImageName(index: index) + "_on"
         
-        let button = (self.menuStackView.subviews[index]).subviews.first as! UIButton
-        button.setImage(UIImage.init(named: imageName), for: .normal)
+        if let img = (self.menuStackView.subviews[index]).subviews.first as? UIImageView {
+            img.image = UIImage(named: imageName)
+        }
+        
     }
     
+    func getTabImageName(index: Int) -> String {
+        var imageName = "menu"
+        
+        switch index {
+        case MenuConfig.Alarm.rawValue :
+            imageName += "_alarm"
+            break
+        case MenuConfig.StopWatch.rawValue :
+            imageName += "_stop"
+            break
+        case MenuConfig.Timer.rawValue :
+            imageName += "_timer"
+            break
+        case MenuConfig.Watch.rawValue :
+            imageName += "_current"
+            break
+        case MenuConfig.Setting.rawValue :
+            imageName += "_setting"
+            break
+        default:
+            imageName = "_alarm"
+            break
+        }
+        
+        return imageName
+    }
 }
 
 // MARK: - UIScrollViewDelegate

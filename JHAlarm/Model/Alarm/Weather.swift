@@ -7,28 +7,27 @@
 //
 
 import Foundation
-import Moya_SwiftyJSONMapper
 import SwiftyJSON
 
-class Weather : ALSwiftyJSONAble {
+struct Weather: ALSwiftyJSONAble {
     let main: WeatherMain?
     let weather: [WeatherSub]?
     
-    required init?(jsonData:JSON){
+    init?(jsonData:JSON){
         self.main = jsonData["main"].to(type: WeatherMain.self) as? WeatherMain
         self.weather = jsonData["weather"].to(type: WeatherSub.self) as? [WeatherSub] ?? []
     }
     
 }
 
-class WeatherMain: ALSwiftyJSONAble {
+struct WeatherMain: ALSwiftyJSONAble {
     let humidity: Double
     let pressure: Double
     var temp: String
     var tempMax: String
     var tempMin: String
     
-    required init?(jsonData:JSON){
+    init?(jsonData:JSON){
         self.humidity = jsonData["humidity"].doubleValue
         self.pressure = jsonData["pressure"].doubleValue
         var dTemp = jsonData["temp"].doubleValue
@@ -54,12 +53,12 @@ class WeatherMain: ALSwiftyJSONAble {
     }
 }
 
-class WeatherSub: ALSwiftyJSONAble {
+struct WeatherSub: ALSwiftyJSONAble {
     let main: String?
     let description: String?
     let icon: URL?
     
-    required init?(jsonData:JSON){
+    init?(jsonData:JSON){
         self.main = jsonData["main"].stringValue
         self.description = jsonData["description"].stringValue
         let strIcon = jsonData["icon"].stringValue

@@ -6,4 +6,10 @@
 //  Copyright © 2019 김제현. All rights reserved.
 //
 
-import Foundation
+extension CGRect {
+    var x: CGFloat { return self.origin.x }
+    var y: CGFloat { return self.origin.y }
+    var centerX: CGFloat { return self.midX }
+    var centerY: CGFloat { return self.midY }
+    var center: CGPoint { return CGPoint(x: self.midX, y: self.midY) }
+}

@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import RxFlow
+import RxCocoa
+
+class BaseVM: Stepper {
+    var steps = PublishRelay<Step>()
+    
+    
+    
+}

@@ -12,19 +12,9 @@ import RxCocoa
 import RxOptional
 import RxSwiftExt
 
-protocol AlarmRepeatDelegate: AnyObject {
-    func checkedWeek(checked: [Int])
-}
-
-class AlarmRepeatVC: BaseVC {
-    @IBOutlet weak var vDim: UIView!
-    @IBOutlet weak var vContainer: UIView!
-    @IBOutlet weak var stvWeek: UIStackView!
-    @IBOutlet weak var constContainerVertical: NSLayoutConstraint!
+class AlarmRepeatVC: BasePopupVC {
     
-    var viewModel: AlarmRepeatVM?
-    weak var delegate: AlarmRepeatDelegate?
-        
+    var viewModel: AlarmRepeatVM!
 //    init(viewModel: AlarmRepeatVM) {
 //        self.viewModel = viewModel
 //    }
@@ -52,63 +42,50 @@ class AlarmRepeatVC: BaseVC {
     override func initView() {
         self.view.layoutIfNeeded()
         constContainerVertical.constant = self.view.frame.size.height
+        
+        // 선택된 반복 요일 표시해주기.
+        for i in 1 ..< stvContainer.arrangedSubviews.count + 1 {
+            let bTag = 100 + i
+            let lTag = 300 + i
+            let isChecked = self.viewModel.isChecked(tag: i)
+            if let button = self.view.viewWithTag(bTag) as? UIButton {
+                button.isSelected = isChecked
+            }
+            
+            if let label = self.view.viewWithTag(lTag) as? UILabel {
+                label.textColor = self.viewModel.isCheckedColor(checked:isChecked)
+            }
+        }
     }
     
     override func setBind() {
-        if let vm = self.viewModel {
-            for arrView in stvWeek.arrangedSubviews {
-                for subView in arrView.subviews {
-                    if let btn = subView as? UIButton {
-                        if btn.tag % 200 == 0 {
-                            btn.rx.tap.subscribeOn(MainScheduler.instance)
-                                .subscribe(onNext: { [weak self] in
-                                    if let _self = self {
-                                        let vTag = btn.tag % 100
-                                        if let button = _self.view.viewWithTag(vTag) as? UIButton {
-                                            button.isSelected = vm.isChecked(tag:vTag)
-                                        }
+        for arrView in stvContainer.arrangedSubviews {
+            for subView in arrView.subviews {
+                if let btn = subView as? UIButton {
+                    if btn.tag / 200 == 1 {
+                        btn.rx.tap.subscribeOn(MainScheduler.instance)
+                            .subscribe(onNext: { [weak self] in
+                                if let _self = self {
+                                    let bTag = btn.tag % 200 + 100
+                                    let lTag = btn.tag % 200 + 300
+                                    let isChecked = _self.viewModel.setChecked(tag:bTag)
+                                    if let button = _self.view.viewWithTag(bTag) as? UIButton {
+                                        button.isSelected = isChecked
                                     }
-                                })
-                        }
+                                    
+                                    if let label = _self.view.viewWithTag(lTag) as? UILabel {
+                                        label.textColor = _self.viewModel.isCheckedColor(checked:isChecked)
+                                    }
+                                }
+                            }).disposed(by: disposeBag)
                     }
                 }
             }
         }
     }
     
-    
-    func showAnim(_ completeion: @escaping ()->()) {
-        constContainerVertical.constant = 0
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            if let _self = self {
-                _self.vDim.alpha = 1.0
-                _self.view.layoutIfNeeded()
-            }
-        }) { (complete) in
-            completeion()
-        }
-    }
-    
-    func hideAnim() {
-        constContainerVertical.constant = self.view.frame.size.height
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            if let _self = self {
-                _self.vDim.alpha = 0.0
-                _self.view.layoutIfNeeded()
-            }
-        })
-    }
-}
-
-extension AlarmRepeatVC {
-    @IBAction func btnCancelPressed(_ sender: UIButton) {
-        self.hideAnim()
-    }
-    
-    @IBAction func btnCompletePressed(_ sender: UIButton) {
-        if let vm = viewModel {
-            delegate?.checkedWeek(checked: vm.manageCheckWeek)
-        }
-        self.hideAnim()
+    override func btnCompletePressed(_ sender: UIButton) {
+        viewModel.sendCheckedData()
+        super.btnCompletePressed(sender)
     }
 }

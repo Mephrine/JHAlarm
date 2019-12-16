@@ -21,9 +21,9 @@ class FooterView: UIView {
     func createBlurEffect(isDark: Bool = true) {
         let blurEffect:UIBlurEffect?
         if isDark {
-            blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+            blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         }else{
-            blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+            blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         }
         
         let blurEffectView = UIVisualEffectView(effect: blurEffect)

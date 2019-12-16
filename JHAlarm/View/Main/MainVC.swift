@@ -8,8 +8,10 @@
 
 import UIKit
 import SPPermission
+import Reusable
+import SwiftyUserDefaults
 
-class MainVC: BaseVC {
+class MainVC: BaseVC, StoryboardBased {
     @IBOutlet var containerView: UIView!
     
     var menuVC: BaseVC!
@@ -17,11 +19,9 @@ class MainVC: BaseVC {
     var footerView: FooterMenuView?
     var viewControllers: [BaseVC]!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.initMenus()
         self.initFooterView()
         
         self.moveToMenu(MenuConfig.Alarm.rawValue)
@@ -29,7 +29,14 @@ class MainVC: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        let alarmID = Defaults[.UD_PLAY_MISSION] ?? ""
+        if !alarmID.isEmpty {
+            let viewModel = AlarmMissionPlayVM(alarmID: alarmID)
+            let missionPlayVC = AlarmMissionPlayVC.instantiate(withViewModel: viewModel, storyBoardName: "Main")
+            if let root = UIApplication.shared.windows.first!.rootViewController {
+                root.present(missionPlayVC, animated: true)
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,17 +50,6 @@ class MainVC: BaseVC {
     
     deinit {
         
-    }
-    
-    func initMenus(){
-        
-        if let AlarmVC    = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlarmVC") as? AlarmVC,
-        let StopWatchVC   = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "StopWatchVC") as? StopWatchVC,
-        let TimerVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TimerVC") as? TimerVC,
-            let SettingVC   = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingVC") as? SettingVC {
-        
-            self.viewControllers = [AlarmVC, StopWatchVC, TimerVC, SettingVC]
-        }
     }
     
     /// 메인 컨트롤러에 연결되어 있는, Child 컨트롤러 Remove
