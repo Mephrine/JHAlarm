@@ -15,12 +15,6 @@ import UserNotifications
 import RealmSwift
 import SwiftyUserDefaults
 
-//struct AppServices: HasAppService, HasAlarmService {
-//    let AppService: AppService
-//    let alarmService: AlarmService
-//}
-
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, AVAudioPlayerDelegate, UNUserNotificationCenterDelegate {
     //class AppDelegate: UIResponder, UIApplicationDelegate, AVAudioPlayerDelegate, AlarmApplicationDelegate {
@@ -31,12 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AVAudioPlayerDelegate, UN
     //
     // Audio
     var audioPlayer: AVAudioPlayer?
-    //    lazy var AppService = {
-    //        return AppService
-    //    }
     
     // 메인 네비이동
-    let appService = AppService()
+    lazy var AppService = {
+        return AppService()
+    }
     
     let alarmScheduler = Scheduler.shared
     

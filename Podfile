@@ -25,10 +25,12 @@ target 'JHAlarm' do
     
 
     # Architecture
-        pod 'ReactorKit'
+#        pod 'ReactorKit'
     #    pod 'Pure'
     
-    
+    ##DI
+    pod 'Swinject'
+  
     pod 'SnapKit'
     pod 'SwiftHEXColors'
 

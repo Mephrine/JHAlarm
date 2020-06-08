@@ -414,6 +414,7 @@
 			children = (
 				030093D023418DE8007D5925 /* HeaderWeatherView.xib */,
 				030093CE23418DCE007D5925 /* HeaderWeatherView.swift */,
+				518EB1BE238FBA960052D393 /* HeaderWeatherVM.swift */,
 			);
 			path = HeaderView;
 			sourceTree = "<group>";
@@ -443,6 +444,7 @@
 				51D9324123716A43006EE519 /* AlarmMissionCell.swift */,
 				51BFBC47237A98DA008BFE65 /* AlarmMissionCell.xib */,
 				5190FFA4238285D4004D44F7 /* SoundItemCell.swift */,
+				5190FFA6238286BA004D44F7 /* SoundItemCellVM.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -473,7 +475,6 @@
 				0360CF86230147E600558895 /* Common */,
 				510A2929237BCDEF00D9FDA0 /* Coordinator */,
 				51BCAE5823542FCE001ED8A6 /* Model */,
-				51BCAE5723542FC4001ED8A6 /* ViewModel */,
 				0360CF85230147AF00558895 /* View */,
 				0360CF892301485F00558895 /* Utils */,
 				0360CFDF2301591C00558895 /* StoryBoard */,
@@ -733,19 +734,29 @@
 		03FEDD052317902C00180BED /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				033388DC231D02F100D82F10 /* Cell */,
 				030093CD23418DBB007D5925 /* HeaderView */,
 				03187DEA232259F7004FD4ED /* NoDataView */,
-				033388DC231D02F100D82F10 /* Cell */,
-				033388D4231D02C600D82F10 /* AlarmVC.swift */,
 				033388D6231D02D600D82F10 /* AlarmDetailVC.swift */,
-				03101C3323337A7C0007EF6B /* AlarmRepeatVC.swift */,
-				511AF6D82356A90600DDD3DD /* AlarmReRingVC.swift */,
-				51EAE3232356D04700C6E3E8 /* AlarmSoundVC.swift */,
-				51EAE3252356D06D00C6E3E8 /* AlarmMissionVC.swift */,
-				515BE2F6238617F8000DFFAF /* AlarmMissionTestVC.swift */,
+				5195E37423546C4A00CD307B /* AlarmDetailVM.swift */,
 				515BE2F823861C6E000DFFAF /* AlarmMissionArithmeticVC.swift */,
-				515BE2FA23861C7B000DFFAF /* AlarmMissionShakeVC.swift */,
+				515BE2FC238644EF000DFFAF /* AlarmMissionArithmeticVM.swift */,
+				51D9324323716AB6006EE519 /* AlarmMissionCellVM.swift */,
 				0379D0AE23A299F7002872ED /* AlarmMissionPlayVC.swift */,
+				0379D0B023A29A19002872ED /* AlarmMissionPlayVM.swift */,
+				515BE2FA23861C7B000DFFAF /* AlarmMissionShakeVC.swift */,
+				515BE2FE238644FD000DFFAF /* AlarmMissionShakeVM.swift */,
+				515BE2F6238617F8000DFFAF /* AlarmMissionTestVC.swift */,
+				51EAE3252356D06D00C6E3E8 /* AlarmMissionVC.swift */,
+				51EAE3292356D0BF00C6E3E8 /* AlarmMissionVM.swift */,
+				03101C3323337A7C0007EF6B /* AlarmRepeatVC.swift */,
+				51079F09234F0ACB00509B16 /* AlarmRepeatVM.swift */,
+				511AF6D82356A90600DDD3DD /* AlarmReRingVC.swift */,
+				511AF6DA2356A92B00DDD3DD /* AlarmReRingVM.swift */,
+				51EAE3232356D04700C6E3E8 /* AlarmSoundVC.swift */,
+				51EAE3272356D0AB00C6E3E8 /* AlarmSoundVM.swift */,
+				033388D4231D02C600D82F10 /* AlarmVC.swift */,
+				033388D8231D02E300D82F10 /* AlarmVM.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -754,6 +765,7 @@
 			isa = PBXGroup;
 			children = (
 				0303B881231F9882007E3EEE /* StopWatchVC.swift */,
+				0303B883231F988B007E3EEE /* StopWatchVM.swift */,
 			);
 			path = StopWatch;
 			sourceTree = "<group>";
@@ -762,6 +774,7 @@
 			isa = PBXGroup;
 			children = (
 				0303B885231F9894007E3EEE /* TimerVC.swift */,
+				0303B887231F989B007E3EEE /* TimerVM.swift */,
 			);
 			path = Timer;
 			sourceTree = "<group>";
@@ -770,6 +783,7 @@
 			isa = PBXGroup;
 			children = (
 				0303B889231F98A4007E3EEE /* SettingVC.swift */,
+				0303B88B231F98AB007E3EEE /* SettingVM.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -912,20 +926,10 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
-		51BCAE5723542FC4001ED8A6 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				51BCAE5E23543059001ED8A6 /* Setting */,
-				51BCAE5D23543055001ED8A6 /* Timer */,
-				51BCAE5C23543033001ED8A6 /* StopWatch */,
-				51BCAE5B23543021001ED8A6 /* Alarm */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		51BCAE5823542FCE001ED8A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				03231F07233B21A900E026F1 /* Weather.swift */,
 				51BCAE5A23543000001ED8A6 /* Alarm */,
 			);
 			path = Model;
@@ -934,55 +938,11 @@
 		51BCAE5A23543000001ED8A6 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
-				03231F07233B21A900E026F1 /* Weather.swift */,
 				03018C99231CE1290082F438 /* AlarmModel.swift */,
 				03341C692325DEBB002140C0 /* AlarmSectionModel.swift */,
 				5141F8D723850D2B00189754 /* AlarmMissionModel.swift */,
 			);
 			path = Alarm;
-			sourceTree = "<group>";
-		};
-		51BCAE5B23543021001ED8A6 /* Alarm */ = {
-			isa = PBXGroup;
-			children = (
-				033388D8231D02E300D82F10 /* AlarmVM.swift */,
-				5195E37423546C4A00CD307B /* AlarmDetailVM.swift */,
-				51079F09234F0ACB00509B16 /* AlarmRepeatVM.swift */,
-				511AF6DA2356A92B00DDD3DD /* AlarmReRingVM.swift */,
-				51EAE3272356D0AB00C6E3E8 /* AlarmSoundVM.swift */,
-				51EAE3292356D0BF00C6E3E8 /* AlarmMissionVM.swift */,
-				51D9324323716AB6006EE519 /* AlarmMissionCellVM.swift */,
-				5190FFA6238286BA004D44F7 /* SoundItemCellVM.swift */,
-				515BE2FC238644EF000DFFAF /* AlarmMissionArithmeticVM.swift */,
-				515BE2FE238644FD000DFFAF /* AlarmMissionShakeVM.swift */,
-				518EB1BE238FBA960052D393 /* HeaderWeatherVM.swift */,
-				0379D0B023A29A19002872ED /* AlarmMissionPlayVM.swift */,
-			);
-			path = Alarm;
-			sourceTree = "<group>";
-		};
-		51BCAE5C23543033001ED8A6 /* StopWatch */ = {
-			isa = PBXGroup;
-			children = (
-				0303B883231F988B007E3EEE /* StopWatchVM.swift */,
-			);
-			path = StopWatch;
-			sourceTree = "<group>";
-		};
-		51BCAE5D23543055001ED8A6 /* Timer */ = {
-			isa = PBXGroup;
-			children = (
-				0303B887231F989B007E3EEE /* TimerVM.swift */,
-			);
-			path = Timer;
-			sourceTree = "<group>";
-		};
-		51BCAE5E23543059001ED8A6 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				0303B88B231F98AB007E3EEE /* SettingVM.swift */,
-			);
-			path = Setting;
 			sourceTree = "<group>";
 		};
 		FE7F3F109BA75EFA0FD28364 /* Frameworks */ = {
@@ -1442,7 +1402,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 545BNS7V4L;
+				DEVELOPMENT_TEAM = DLY5388CL9;
 				INFOPLIST_FILE = "JHAlarm/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
