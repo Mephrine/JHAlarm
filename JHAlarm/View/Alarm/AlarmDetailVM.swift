@@ -19,7 +19,7 @@ class AlarmDetailVM: BaseVM {
     var schedule: AlarmModel?
     
     // Send Detail to List
-    let task = PublishSubject<Bool>()
+    let task: PublishSubject<Bool>?
     
     let alarmDt = BehaviorRelay<Date>(value: Date())
     
@@ -38,7 +38,8 @@ class AlarmDetailVM: BaseVM {
     
     var isEditing = false
     
-    init(schedule: AlarmModel?) {
+    init(schedule: AlarmModel?, task: PublishSubject<Bool>? = nil) {
+        self.task = task
         if let data = schedule {
             self.isEditing = true
             self.schedule = data
@@ -305,25 +306,24 @@ class AlarmDetailVM: BaseVM {
         
         Scheduler.shared.setNotificationWithDate(date: alarmDt.value, soundName: soundNm.value.getFileName() , weekdays: Array(alarmModel.repetition), onSnooze: false, snoozeTime: snoozeTime.value, alarmID: alarmModel.alarmID, vibrartion: switchVibrate.value)
         
-        self.task.onNext(true)
+        self.task?.onNext(true)
         self.steps.accept(AppStep.closeAlarmDetail)
     }
     
     func clickChoiceMission() {
-        let viewModel = AlarmMissionVM.init(selected: mission.value)
-        viewModel.task.subscribeOn(MainScheduler.instance)
-            .bind(to: self.mission)
+        let task = PublishSubject<MissionModel>()
+        task.bind(to: self.mission)
             .disposed(by: disposeBag)
         
-        self.steps.accept(AppStep.selectChoiceAlarmMission(viewModel: viewModel))
+        self.steps.accept(AppStep.selectChoiceAlarmMission(selected: mission.value, task: task))
     }
     
     func clickChoiceAlarm() {
-        let viewModel = AlarmSoundVM.init(soundNm.value)
-        viewModel.task.subscribeOn(MainScheduler.instance)
+        let task = PublishSubject<AlarmSound>()
+        task.subscribeOn(MainScheduler.instance)
                 .bind(to: self.soundNm)
                 .disposed(by: disposeBag)
         
-        self.steps.accept(AppStep.selectChoiceAlarmSound(viewModel: viewModel))
+        self.steps.accept(AppStep.selectChoiceAlarmSound(initSound: soundNm.value, task: task))
     }
 }

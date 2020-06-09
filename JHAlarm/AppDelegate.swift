@@ -28,14 +28,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AVAudioPlayerDelegate, UN
     
     let alarmScheduler = Scheduler.shared
     
+    // IoC
     let container = Container() {
         $0.register(AlarmVM.self) { _ in AlarmVM() }
+        
+        
         $0.register(FlowCoordinator.self) { _ in FlowCoordinator() }
         // 메인 네비이동
         $0.register(AppService.self) { _ in AppService() }
         $0.register(FlowCoordinator.self) { _ in FlowCoordinator() }
-        $0.storyboardInitCompleted(AlarmVC.self) { (r, c) in
+        $0.storyboardInitCompleted(AlarmVC.self) { r, c in
             c.viewModel = r.resolve(AlarmVM.self)
+        }
+        $0.storyboardInitCompleted(AlarmDetailVC.self) { r, c in
+            c.viewModel = r.resolve(AlarmDetailVM.self)
         }
     }
     

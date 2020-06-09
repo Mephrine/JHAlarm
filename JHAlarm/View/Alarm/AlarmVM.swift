@@ -221,7 +221,7 @@ class AlarmVM: Stepper, ViewModelProtocol {
     }
     
     // MARK: Move
-    func goEditAlarmDetail(model: AlarmModel?) {
+    func goEditAlarmDetail(model: AlarmModel? = nil) {
         if let existModel = model {
             self.steps.accept(AppStep.selectAlarmEdit(data: existModel))
         } else {
@@ -230,12 +230,13 @@ class AlarmVM: Stepper, ViewModelProtocol {
     }
     
     func goNewAlarmDetail() {
-        let viewModel = AlarmDetailVM(schedule: nil)
-        viewModel.task.map { _ in true }
+        // reference라서 이렇게 사용하면 될 것으로 예상.
+        let task = PublishSubject<Bool>()
+        task.map { _ in true }
             .bind(to: self.reloadData)
             .disposed(by: disposeBag)
         
-        self.steps.accept(AppStep.clickNewAlarm(viewModel: viewModel))
+        self.steps.accept(AppStep.clickNewAlarm(task: task))
     }
     
     func deleteRow(index: Int) {

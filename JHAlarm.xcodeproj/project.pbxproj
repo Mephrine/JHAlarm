@@ -139,6 +139,7 @@
 		038B8D402331C98900F967D4 /* HeroTransition+Complete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038B8D352331C98800F967D4 /* HeroTransition+Complete.swift */; };
 		038B8D412331C98900F967D4 /* HeroTransition+Interactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038B8D362331C98800F967D4 /* HeroTransition+Interactive.swift */; };
 		038B8D422331C98900F967D4 /* HeroProgressRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038B8D372331C98900F967D4 /* HeroProgressRunner.swift */; };
+		03B2DAF4248F774C00D8F812 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B2DAF3248F774C00D8F812 /* UIViewControllerExtension.swift */; };
 		03DE1FAB233A1050008A2F67 /* CallAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE1FAA233A1050008A2F67 /* CallAPI.swift */; };
 		03FEDD162317A2A300180BED /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FEDD152317A2A300180BED /* BaseVC.swift */; };
 		03FEDD302317C2FC00180BED /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FEDD2F2317C2FC00180BED /* MarqueeLabel.swift */; };
@@ -333,6 +334,7 @@
 		038B8D352331C98800F967D4 /* HeroTransition+Complete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeroTransition+Complete.swift"; sourceTree = "<group>"; };
 		038B8D362331C98800F967D4 /* HeroTransition+Interactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeroTransition+Interactive.swift"; sourceTree = "<group>"; };
 		038B8D372331C98900F967D4 /* HeroProgressRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroProgressRunner.swift; sourceTree = "<group>"; };
+		03B2DAF3248F774C00D8F812 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		03DE1FAA233A1050008A2F67 /* CallAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAPI.swift; sourceTree = "<group>"; };
 		03FEDD152317A2A300180BED /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		03FEDD2F2317C2FC00180BED /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
@@ -449,6 +451,15 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		03517CF2248F6785004DE69F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				510A292A237BCE0300D9FDA0 /* MainService.swift */,
+				510A292C237BCE1500D9FDA0 /* AlarmService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		0360CF4B2301465C00558895 = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +485,7 @@
 				0360CF88230147F800558895 /* Configs */,
 				0360CF86230147E600558895 /* Common */,
 				510A2929237BCDEF00D9FDA0 /* Coordinator */,
+				03517CF2248F6785004DE69F /* Service */,
 				51BCAE5823542FCE001ED8A6 /* Model */,
 				0360CF85230147AF00558895 /* View */,
 				0360CF892301485F00558895 /* Utils */,
@@ -554,6 +566,7 @@
 				5160645E2390D941004DF7B3 /* UITableView+Rx.swift */,
 				519A11F5239E2B450019EDC5 /* UIWindow+.swift */,
 				518B850B23A3832700E522CB /* UITextField+Extension.swift */,
+				03B2DAF3248F774C00D8F812 /* UIViewControllerExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -859,8 +872,6 @@
 		510A2929237BCDEF00D9FDA0 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				510A292A237BCE0300D9FDA0 /* MainService.swift */,
-				510A292C237BCE1500D9FDA0 /* AlarmService.swift */,
 				510A2935237BD37400D9FDA0 /* AppStep.swift */,
 				510A292E237BCFCA00D9FDA0 /* MainFlow.swift */,
 				510A2930237BCFD400D9FDA0 /* AlarmMissionFlow.swift */,
@@ -1125,6 +1136,7 @@
 				03341C8B23264B4B002140C0 /* URLExtension.swift in Sources */,
 				038B8D0D2331C97200F967D4 /* UIViewController+Hero.swift in Sources */,
 				0360CFA923014FB400558895 /* NavigationExtension.swift in Sources */,
+				03B2DAF4248F774C00D8F812 /* UIViewControllerExtension.swift in Sources */,
 				519194E6239A2AE10090B8F6 /* Observable+Response.swift in Sources */,
 				0360CF8C23014EC500558895 /* UserDefaultExtension.swift in Sources */,
 				038B8D402331C98900F967D4 /* HeroTransition+Complete.swift in Sources */,

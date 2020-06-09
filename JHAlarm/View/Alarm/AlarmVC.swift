@@ -125,18 +125,6 @@ class AlarmVC: BaseVC {
             }) .disposed(by: disposeBag)
                    
         log.d("self.viewModel.alarmSchedule : \(viewModel.alarmSchedule.count())")
-//        self.viewModel.alarmSchedule.count()
-//            .map { $0 > 0 }
-//            .bind(to: self.btnEdit.rx.isHidden)
-//            .disposed(by: disposeBag)
-//
-//        self.viewModel.alarmSchedule.count()
-//            .map { $0 == 0 }
-//            .subscribeOn(Schedulers.main)
-//            .subscribe(onNext: { [weak self] in
-//                self?.setNoDataView(isShow: $0)
-//            })
-//        .disposed(by: disposeBag)
         
         
         tbAlarm.rx.realmModelSelected(AlarmModel.self)
@@ -247,36 +235,6 @@ extension AlarmVC: UITableViewDelegate {
         }
         return 0
     }
-    
-    // Override to support editing the table view.
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            let index = indexPath.row
-//            self.viewModel.deleteRow(index: index)
-//            // Delete the row from the data source
-//            self.tbAlarm.beginUpdates()
-//            self.tbAlarm.deleteRows(at: [indexPath], with: .middle)
-//            self.tbAlarm.endUpdates()
-//            Scheduler.shared.reSchedule()
-//            self.tbAlarm.reloadData()
-//        }
-//    }
-
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        if self.viewModel.schedules == nil || self.viewModel.schedules.count == 0 {
-//            if let view = Bundle.main.loadNibNamed("NoDataView", owner: nil, options: nil)?.first as? NoDataView {
-//                return view
-//            }
-//        }
-//        return nil
-//    }
-
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        if self.viewModel.schedules.count == 0 {
-//            return 300
-//        }
-//        return 0
-//    }
 }
 
 
@@ -293,26 +251,5 @@ extension AlarmVC: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 스클롤 이동중 : 헤더 이동
-//        self.previousScrollOffset = self.headerView.scrollViewDidScroll(tableView: self.tbAlarm, previousScrollOffset: self.previousScrollOffset)
-
     }
 }
-
-//extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Response {
-//
-//    /// Maps data received from the signal into an object which implements the ALSwiftyJSONAble protocol.
-//    /// If the conversion fails, the signal errors.
-//    public func map<T: ALSwiftyJSONAble>(to type: T.Type) -> Single<T> {
-//        return flatMap { response -> Single<T> in
-//            return Single.just(try response.map(to: type))
-//        }
-//    }
-//
-//    /// Maps data received from the signal into an array of objects which implement the ALSwiftyJSONAble protocol.
-//    /// If the conversion fails, the signal errors.
-//    public func map<T: ALSwiftyJSONAble>(to type: [T.Type]) -> Single<[T]> {
-//        return flatMap { response -> Single<[T]> in
-//            return Single.just(try response.map(to: type))
-//        }
-//    }
-//}

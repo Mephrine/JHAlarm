@@ -16,7 +16,7 @@ class AlarmMissionPlayVM: BaseVM {
     var disposeBag = DisposeBag()
     
     // Send Detail to List
-    let task = PublishSubject<MissionModel?>()
+    let task: PublishSubject<MissionModel?>?
     
     
     let num1 = BehaviorRelay<Int>(value: 0)
@@ -28,8 +28,9 @@ class AlarmMissionPlayVM: BaseVM {
     let alarmID: String
     
     
-    init(alarmID: String) {
+    init(alarmID: String, task: PublishSubject<MissionModel?>? = nil) {
         self.alarmID = alarmID
+        self.task = task
     }
     
     // MARK: Move

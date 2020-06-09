@@ -29,8 +29,10 @@ target 'JHAlarm' do
     #    pod 'Pure'
     
     ##DI
-    pod 'Swinject'
+#    pod 'Swinject'
     pod 'SwinjectStoryboard'
+    pod 'Swinject'
+#    pod 'SwinjectAutoregistration', '2.7.0'
   
     pod 'SnapKit'
     pod 'SwiftHEXColors'
