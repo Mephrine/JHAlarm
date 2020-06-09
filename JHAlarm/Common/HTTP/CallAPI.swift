@@ -20,7 +20,7 @@ enum CallAPI {
     case GetObject
 }
 
-extension CallAPI: JSONMappableTargetType {
+extension CallAPI: TargetType, AccessTokenAuthorizable {
     // 각 case의 도메인
     var baseURL: URL {
         switch self {
@@ -98,7 +98,7 @@ extension CallAPI: JSONMappableTargetType {
     }
     
     
-    var authorizationType: AuthorizationType {
+    var authorizationType: AuthorizationType? {
         /*
          밑에와 같은 방식도 있음.
          case .MwaveVoteSend:
@@ -124,9 +124,6 @@ extension CallAPI: JSONMappableTargetType {
     }
 }
 
-protocol JSONMappableTargetType: TargetType, AccessTokenAuthorizable {
-    var responseType: ALSwiftyJSONAble.Type { get }
-}
 
 private func stubbedResponseFromJSONFile(filename: String, inDirectory subpath: String = "", bundle:Bundle = Bundle.main ) -> Data {
     guard let path = bundle.path(forResource: filename, ofType: "json", inDirectory: subpath) else { return Data() }

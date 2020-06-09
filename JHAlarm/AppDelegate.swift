@@ -14,24 +14,30 @@ import AudioToolbox
 import UserNotifications
 import RealmSwift
 import SwiftyUserDefaults
+import Swinject
+import SwinjectStoryboard
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, AVAudioPlayerDelegate, UNUserNotificationCenterDelegate {
     //class AppDelegate: UIResponder, UIApplicationDelegate, AVAudioPlayerDelegate, AlarmApplicationDelegate {
     
     var window: UIWindow?
-    let disposeBag = DisposeBag()
-    var coordinator = FlowCoordinator()
     //
     // Audio
     var audioPlayer: AVAudioPlayer?
     
-    // 메인 네비이동
-    lazy var AppService = {
-        return AppService()
-    }
-    
     let alarmScheduler = Scheduler.shared
+    
+    let container = Container() {
+        $0.register(AlarmVM.self) { _ in AlarmVM() }
+        $0.register(FlowCoordinator.self) { _ in FlowCoordinator() }
+        // 메인 네비이동
+        $0.register(AppService.self) { _ in AppService() }
+        $0.register(FlowCoordinator.self) { _ in FlowCoordinator() }
+        $0.storyboardInitCompleted(AlarmVC.self) { (r, c) in
+            c.viewModel = r.resolve(AlarmVM.self)
+        }
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -42,20 +48,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AVAudioPlayerDelegate, UN
         }
         
         // Coordinator
-        let mainFlow = MainFlow(service: appService)
-        
-        Flows.whenReady(flow1: mainFlow) { root in
-            window.rootViewController = root
-            window.makeKeyAndVisible()
-        }
-        
-        self.coordinator.coordinate(flow: mainFlow, with: MainStepper())
-        
-        // Push
-        let center = UNUserNotificationCenter.current()
-        center.getNotificationSettings { (settings) in
-            if settings.authorizationStatus == .notDetermined {
-                self.registNotification()
+        if let service = container.resolve(AppService.self),
+            let coordinator = container.resolve(FlowCoordinator.self) {
+            let mainFlow = MainFlow(service: service)
+            
+            Flows.whenReady(flow1: mainFlow) { root in
+                window.rootViewController = root
+                window.makeKeyAndVisible()
+            }
+            
+            coordinator.coordinate(flow: mainFlow, with: MainStepper())
+            
+            // Push
+            let center = UNUserNotificationCenter.current()
+            center.getNotificationSettings { (settings) in
+                if settings.authorizationStatus == .notDetermined {
+                    self.registNotification()
+                }
             }
         }
         

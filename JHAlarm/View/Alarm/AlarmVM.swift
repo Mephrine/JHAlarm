@@ -19,7 +19,7 @@ import SwiftyJSON
 import RxFlow
 //import NVActivityIndicatorView
 
-class AlarmVM: Stepper {
+class AlarmVM: Stepper, ViewModelProtocol {
     var steps = PublishRelay<Step>()
     
 //    var onShowLoading: Observable {
@@ -50,7 +50,7 @@ class AlarmVM: Stepper {
     //TODO: Mephrine - update도 추가해야함.
     //Realm
     var alarmSchedule: Observable<(AnyRealmCollection<AlarmModel>, RealmChangeset?)>  {
-        return Observable.changeset(from: schedule).share()
+        return Observable.changeset(from: schedule)
     }
     
     var schedule: Results<AlarmModel> {
@@ -76,6 +76,20 @@ class AlarmVM: Stepper {
     init() {
            self.requestGetWeather()
        }
+    
+    struct Input {
+        
+    }
+    
+    struct Output {
+    
+    }
+    
+    
+    func transform(input: Input?) -> Output {
+        
+    }
+    
     
     //MARK: LOCATION PERMISSION
     func getLocation() -> Observable<[String: String]?> {

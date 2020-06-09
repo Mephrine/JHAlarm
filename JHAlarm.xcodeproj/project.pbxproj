@@ -734,6 +734,8 @@
 		03FEDD052317902C00180BED /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				033388D4231D02C600D82F10 /* AlarmVC.swift */,
+				033388D8231D02E300D82F10 /* AlarmVM.swift */,
 				033388DC231D02F100D82F10 /* Cell */,
 				030093CD23418DBB007D5925 /* HeaderView */,
 				03187DEA232259F7004FD4ED /* NoDataView */,
@@ -755,8 +757,6 @@
 				511AF6DA2356A92B00DDD3DD /* AlarmReRingVM.swift */,
 				51EAE3232356D04700C6E3E8 /* AlarmSoundVC.swift */,
 				51EAE3272356D0AB00C6E3E8 /* AlarmSoundVM.swift */,
-				033388D4231D02C600D82F10 /* AlarmVC.swift */,
-				033388D8231D02E300D82F10 /* AlarmVM.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -792,10 +792,10 @@
 			isa = PBXGroup;
 			children = (
 				03FEDD152317A2A300180BED /* BaseVC.swift */,
+				513F001E238381F9008B0143 /* BaseVM.swift */,
 				511AF6D62356A6A600DDD3DD /* BasePopupVC.swift */,
 				514BEE8F234C47AE008A2C64 /* ViewModelProtocol.swift */,
 				510A2937237BDC5400D9FDA0 /* ViewModelBased.swift */,
-				513F001E238381F9008B0143 /* BaseVM.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1409,7 +1409,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.adcapsule.jhkimTest;
+				PRODUCT_BUNDLE_IDENTIFIER = app.mephrine.alarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "JHAlarm/Supporting Files/JHAlarm-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1425,14 +1425,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 545BNS7V4L;
+				DEVELOPMENT_TEAM = DLY5388CL9;
 				INFOPLIST_FILE = "JHAlarm/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.adcapsule.jhkimTest;
+				PRODUCT_BUNDLE_IDENTIFIER = app.mephrine.alarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "JHAlarm/Supporting Files/JHAlarm-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
