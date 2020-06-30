@@ -15,19 +15,23 @@ class AlarmMissionArithmeticVM: BaseVM {
     var disposeBag = DisposeBag()
     
     // Send Detail to List
-    let task = PublishSubject<MissionModel?>()
+    let task: PublishSubject<MissionModel?>?
     
+    
+    init(task: PublishSubject<MissionModel?>) {
+        self.task = task
+    }
     
     
     // MARK: Move
     @objc func popViewController() {
-        self.task.onNext(nil)
+        self.task?.onNext(nil)
         self.steps.accept(AppStep.backAlarmMissionArithmetic)
     }
 
     func setMissionAndDismiss() {
         let model = MissionModel.init(wakeMission: .Arithmetic, level: 0, numberOfTimes: 0)
-        self.task.onNext(model)
+        self.task?.onNext(model)
         self.steps.accept(AppStep.setUpAlarmMissionArithmetic)
     }
 }

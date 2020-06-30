@@ -7,6 +7,7 @@
 //
 
 import RxFlow
+import RxSwift
 
 enum AppStep: Step {
     // start
@@ -16,20 +17,20 @@ enum AppStep: Step {
     // 알람 상세 눌렀을 때,
     case selectAlarmEdit(data: AlarmModel)
     // 새로운 알람 생성 눌렀을 때,
-    case clickNewAlarm(viewModel: AlarmDetailVM)
+    case clickNewAlarm(task: PublishSubject<Bool>)
     // 알람 닫기.
     case closeAlarmDetail
     
     
     //알람 스텝
     //Mission
-    case selectChoiceAlarmMission(viewModel: AlarmMissionVM)
+    case selectChoiceAlarmMission(selected: MissionModel, task: PublishSubject<MissionModel>)
 //    case selectAlarmMission(viewModel: Mission)
     case closeAlarmMission
     
-    case selectAlarmMissionArithmetic(viewModel: AlarmMissionArithmeticVM)
+    case selectAlarmMissionArithmetic(task: PublishSubject<MissionModel?>)
     
-    case selectAlarmMissionShake(viewModel: AlarmMissionShakeVM)
+    case selectAlarmMissionShake(task: PublishSubject<MissionModel?>)
     
     case setUpAlarmMissionArithmetic
     
@@ -41,10 +42,10 @@ enum AppStep: Step {
     
     
     //Sound
-    case selectChoiceAlarmSound(viewModel: AlarmSoundVM)
+    case selectChoiceAlarmSound(initSound: AlarmSound, task: PublishSubject<AlarmSound>)
 //    case selectAlarmSound(selected: AlarmSound)
     case closeAlarmSound
     
-    case showAlarmMission(viewModel: AlarmMissionPlayVM)
+    case showAlarmMission(alarmId: String, task: PublishSubject<MissionModel?>)
     case completeAlarmMission
 }

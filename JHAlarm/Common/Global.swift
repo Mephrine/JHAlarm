@@ -14,6 +14,8 @@ class Global: NSObject {
     static let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
     static let STATUS_HEIGHT = UIApplication.shared.statusBarFrame.size.height
     
+    static let appDelegate =  UIApplication.shared.delegate as! AppDelegate
+    
     static func openUrl(_ urlString: String, _ handler:(() -> Void)? = nil) {
         
         guard let url = URL(string: urlString) else {

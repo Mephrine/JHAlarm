@@ -139,6 +139,7 @@
 		038B8D402331C98900F967D4 /* HeroTransition+Complete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038B8D352331C98800F967D4 /* HeroTransition+Complete.swift */; };
 		038B8D412331C98900F967D4 /* HeroTransition+Interactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038B8D362331C98800F967D4 /* HeroTransition+Interactive.swift */; };
 		038B8D422331C98900F967D4 /* HeroProgressRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038B8D372331C98900F967D4 /* HeroProgressRunner.swift */; };
+		03B2DAF4248F774C00D8F812 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B2DAF3248F774C00D8F812 /* UIViewControllerExtension.swift */; };
 		03DE1FAB233A1050008A2F67 /* CallAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DE1FAA233A1050008A2F67 /* CallAPI.swift */; };
 		03FEDD162317A2A300180BED /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FEDD152317A2A300180BED /* BaseVC.swift */; };
 		03FEDD302317C2FC00180BED /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FEDD2F2317C2FC00180BED /* MarqueeLabel.swift */; };
@@ -333,6 +334,7 @@
 		038B8D352331C98800F967D4 /* HeroTransition+Complete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeroTransition+Complete.swift"; sourceTree = "<group>"; };
 		038B8D362331C98800F967D4 /* HeroTransition+Interactive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HeroTransition+Interactive.swift"; sourceTree = "<group>"; };
 		038B8D372331C98900F967D4 /* HeroProgressRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroProgressRunner.swift; sourceTree = "<group>"; };
+		03B2DAF3248F774C00D8F812 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		03DE1FAA233A1050008A2F67 /* CallAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAPI.swift; sourceTree = "<group>"; };
 		03FEDD152317A2A300180BED /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		03FEDD2F2317C2FC00180BED /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 			children = (
 				030093D023418DE8007D5925 /* HeaderWeatherView.xib */,
 				030093CE23418DCE007D5925 /* HeaderWeatherView.swift */,
+				518EB1BE238FBA960052D393 /* HeaderWeatherVM.swift */,
 			);
 			path = HeaderView;
 			sourceTree = "<group>";
@@ -443,8 +446,18 @@
 				51D9324123716A43006EE519 /* AlarmMissionCell.swift */,
 				51BFBC47237A98DA008BFE65 /* AlarmMissionCell.xib */,
 				5190FFA4238285D4004D44F7 /* SoundItemCell.swift */,
+				5190FFA6238286BA004D44F7 /* SoundItemCellVM.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		03517CF2248F6785004DE69F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				510A292A237BCE0300D9FDA0 /* MainService.swift */,
+				510A292C237BCE1500D9FDA0 /* AlarmService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		0360CF4B2301465C00558895 = {
@@ -472,8 +485,8 @@
 				0360CF88230147F800558895 /* Configs */,
 				0360CF86230147E600558895 /* Common */,
 				510A2929237BCDEF00D9FDA0 /* Coordinator */,
+				03517CF2248F6785004DE69F /* Service */,
 				51BCAE5823542FCE001ED8A6 /* Model */,
-				51BCAE5723542FC4001ED8A6 /* ViewModel */,
 				0360CF85230147AF00558895 /* View */,
 				0360CF892301485F00558895 /* Utils */,
 				0360CFDF2301591C00558895 /* StoryBoard */,
@@ -553,6 +566,7 @@
 				5160645E2390D941004DF7B3 /* UITableView+Rx.swift */,
 				519A11F5239E2B450019EDC5 /* UIWindow+.swift */,
 				518B850B23A3832700E522CB /* UITextField+Extension.swift */,
+				03B2DAF3248F774C00D8F812 /* UIViewControllerExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -733,19 +747,29 @@
 		03FEDD052317902C00180BED /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				033388D4231D02C600D82F10 /* AlarmVC.swift */,
+				033388D8231D02E300D82F10 /* AlarmVM.swift */,
+				033388DC231D02F100D82F10 /* Cell */,
 				030093CD23418DBB007D5925 /* HeaderView */,
 				03187DEA232259F7004FD4ED /* NoDataView */,
-				033388DC231D02F100D82F10 /* Cell */,
-				033388D4231D02C600D82F10 /* AlarmVC.swift */,
 				033388D6231D02D600D82F10 /* AlarmDetailVC.swift */,
-				03101C3323337A7C0007EF6B /* AlarmRepeatVC.swift */,
-				511AF6D82356A90600DDD3DD /* AlarmReRingVC.swift */,
-				51EAE3232356D04700C6E3E8 /* AlarmSoundVC.swift */,
-				51EAE3252356D06D00C6E3E8 /* AlarmMissionVC.swift */,
-				515BE2F6238617F8000DFFAF /* AlarmMissionTestVC.swift */,
+				5195E37423546C4A00CD307B /* AlarmDetailVM.swift */,
 				515BE2F823861C6E000DFFAF /* AlarmMissionArithmeticVC.swift */,
-				515BE2FA23861C7B000DFFAF /* AlarmMissionShakeVC.swift */,
+				515BE2FC238644EF000DFFAF /* AlarmMissionArithmeticVM.swift */,
+				51D9324323716AB6006EE519 /* AlarmMissionCellVM.swift */,
 				0379D0AE23A299F7002872ED /* AlarmMissionPlayVC.swift */,
+				0379D0B023A29A19002872ED /* AlarmMissionPlayVM.swift */,
+				515BE2FA23861C7B000DFFAF /* AlarmMissionShakeVC.swift */,
+				515BE2FE238644FD000DFFAF /* AlarmMissionShakeVM.swift */,
+				515BE2F6238617F8000DFFAF /* AlarmMissionTestVC.swift */,
+				51EAE3252356D06D00C6E3E8 /* AlarmMissionVC.swift */,
+				51EAE3292356D0BF00C6E3E8 /* AlarmMissionVM.swift */,
+				03101C3323337A7C0007EF6B /* AlarmRepeatVC.swift */,
+				51079F09234F0ACB00509B16 /* AlarmRepeatVM.swift */,
+				511AF6D82356A90600DDD3DD /* AlarmReRingVC.swift */,
+				511AF6DA2356A92B00DDD3DD /* AlarmReRingVM.swift */,
+				51EAE3232356D04700C6E3E8 /* AlarmSoundVC.swift */,
+				51EAE3272356D0AB00C6E3E8 /* AlarmSoundVM.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -754,6 +778,7 @@
 			isa = PBXGroup;
 			children = (
 				0303B881231F9882007E3EEE /* StopWatchVC.swift */,
+				0303B883231F988B007E3EEE /* StopWatchVM.swift */,
 			);
 			path = StopWatch;
 			sourceTree = "<group>";
@@ -762,6 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				0303B885231F9894007E3EEE /* TimerVC.swift */,
+				0303B887231F989B007E3EEE /* TimerVM.swift */,
 			);
 			path = Timer;
 			sourceTree = "<group>";
@@ -770,6 +796,7 @@
 			isa = PBXGroup;
 			children = (
 				0303B889231F98A4007E3EEE /* SettingVC.swift */,
+				0303B88B231F98AB007E3EEE /* SettingVM.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -778,10 +805,10 @@
 			isa = PBXGroup;
 			children = (
 				03FEDD152317A2A300180BED /* BaseVC.swift */,
+				513F001E238381F9008B0143 /* BaseVM.swift */,
 				511AF6D62356A6A600DDD3DD /* BasePopupVC.swift */,
 				514BEE8F234C47AE008A2C64 /* ViewModelProtocol.swift */,
 				510A2937237BDC5400D9FDA0 /* ViewModelBased.swift */,
-				513F001E238381F9008B0143 /* BaseVM.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -845,8 +872,6 @@
 		510A2929237BCDEF00D9FDA0 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				510A292A237BCE0300D9FDA0 /* MainService.swift */,
-				510A292C237BCE1500D9FDA0 /* AlarmService.swift */,
 				510A2935237BD37400D9FDA0 /* AppStep.swift */,
 				510A292E237BCFCA00D9FDA0 /* MainFlow.swift */,
 				510A2930237BCFD400D9FDA0 /* AlarmMissionFlow.swift */,
@@ -912,20 +937,10 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
-		51BCAE5723542FC4001ED8A6 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				51BCAE5E23543059001ED8A6 /* Setting */,
-				51BCAE5D23543055001ED8A6 /* Timer */,
-				51BCAE5C23543033001ED8A6 /* StopWatch */,
-				51BCAE5B23543021001ED8A6 /* Alarm */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		51BCAE5823542FCE001ED8A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				03231F07233B21A900E026F1 /* Weather.swift */,
 				51BCAE5A23543000001ED8A6 /* Alarm */,
 			);
 			path = Model;
@@ -934,55 +949,11 @@
 		51BCAE5A23543000001ED8A6 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
-				03231F07233B21A900E026F1 /* Weather.swift */,
 				03018C99231CE1290082F438 /* AlarmModel.swift */,
 				03341C692325DEBB002140C0 /* AlarmSectionModel.swift */,
 				5141F8D723850D2B00189754 /* AlarmMissionModel.swift */,
 			);
 			path = Alarm;
-			sourceTree = "<group>";
-		};
-		51BCAE5B23543021001ED8A6 /* Alarm */ = {
-			isa = PBXGroup;
-			children = (
-				033388D8231D02E300D82F10 /* AlarmVM.swift */,
-				5195E37423546C4A00CD307B /* AlarmDetailVM.swift */,
-				51079F09234F0ACB00509B16 /* AlarmRepeatVM.swift */,
-				511AF6DA2356A92B00DDD3DD /* AlarmReRingVM.swift */,
-				51EAE3272356D0AB00C6E3E8 /* AlarmSoundVM.swift */,
-				51EAE3292356D0BF00C6E3E8 /* AlarmMissionVM.swift */,
-				51D9324323716AB6006EE519 /* AlarmMissionCellVM.swift */,
-				5190FFA6238286BA004D44F7 /* SoundItemCellVM.swift */,
-				515BE2FC238644EF000DFFAF /* AlarmMissionArithmeticVM.swift */,
-				515BE2FE238644FD000DFFAF /* AlarmMissionShakeVM.swift */,
-				518EB1BE238FBA960052D393 /* HeaderWeatherVM.swift */,
-				0379D0B023A29A19002872ED /* AlarmMissionPlayVM.swift */,
-			);
-			path = Alarm;
-			sourceTree = "<group>";
-		};
-		51BCAE5C23543033001ED8A6 /* StopWatch */ = {
-			isa = PBXGroup;
-			children = (
-				0303B883231F988B007E3EEE /* StopWatchVM.swift */,
-			);
-			path = StopWatch;
-			sourceTree = "<group>";
-		};
-		51BCAE5D23543055001ED8A6 /* Timer */ = {
-			isa = PBXGroup;
-			children = (
-				0303B887231F989B007E3EEE /* TimerVM.swift */,
-			);
-			path = Timer;
-			sourceTree = "<group>";
-		};
-		51BCAE5E23543059001ED8A6 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				0303B88B231F98AB007E3EEE /* SettingVM.swift */,
-			);
-			path = Setting;
 			sourceTree = "<group>";
 		};
 		FE7F3F109BA75EFA0FD28364 /* Frameworks */ = {
@@ -1165,6 +1136,7 @@
 				03341C8B23264B4B002140C0 /* URLExtension.swift in Sources */,
 				038B8D0D2331C97200F967D4 /* UIViewController+Hero.swift in Sources */,
 				0360CFA923014FB400558895 /* NavigationExtension.swift in Sources */,
+				03B2DAF4248F774C00D8F812 /* UIViewControllerExtension.swift in Sources */,
 				519194E6239A2AE10090B8F6 /* Observable+Response.swift in Sources */,
 				0360CF8C23014EC500558895 /* UserDefaultExtension.swift in Sources */,
 				038B8D402331C98900F967D4 /* HeroTransition+Complete.swift in Sources */,
@@ -1442,14 +1414,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 545BNS7V4L;
+				DEVELOPMENT_TEAM = DLY5388CL9;
 				INFOPLIST_FILE = "JHAlarm/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.adcapsule.jhkimTest;
+				PRODUCT_BUNDLE_IDENTIFIER = app.mephrine.alarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "JHAlarm/Supporting Files/JHAlarm-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1465,14 +1437,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 545BNS7V4L;
+				DEVELOPMENT_TEAM = DLY5388CL9;
 				INFOPLIST_FILE = "JHAlarm/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.adcapsule.jhkimTest;
+				PRODUCT_BUNDLE_IDENTIFIER = app.mephrine.alarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "JHAlarm/Supporting Files/JHAlarm-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

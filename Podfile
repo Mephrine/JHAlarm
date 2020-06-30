@@ -24,16 +24,21 @@ target 'JHAlarm' do
     pod 'Action'
     
 
-    # Architecture
-        pod 'ReactorKit'
+    # Architecture - CleanArchitecture로 적용
+#        pod 'ReactorKit'
     #    pod 'Pure'
     
-    
+    ##DI
+#    pod 'Swinject'
+    pod 'SwinjectStoryboard'
+    pod 'Swinject'
+#    pod 'SwinjectAutoregistration', '2.7.0'
+  
     pod 'SnapKit'
     pod 'SwiftHEXColors'
 
     ## UserDefaults 관련 라이브러리
-    pod 'SwiftyUserDefaults'
+    pod 'SwiftyUserDefaults', '~> 4.0'
     ## Indicator 라이브러리
     pod 'NVActivityIndicatorView'
     

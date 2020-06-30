@@ -15,7 +15,7 @@ class AlarmMissionVM: BaseVM {
     var disposeBag = DisposeBag()
     
     // Send Detail to List
-    let task = PublishSubject<MissionModel>()
+    let task: PublishSubject<MissionModel>?
     
     // input
     var initItem: MissionModel
@@ -35,8 +35,9 @@ class AlarmMissionVM: BaseVM {
         return Observable.just([item])
     }
     
-    init(selected: MissionModel) {
+    init(selected: MissionModel, task: PublishSubject<MissionModel>) {
         self.initItem = selected
+        self.task = task
         self.selectedItem.onNext(selected)
     }
     
@@ -66,7 +67,7 @@ class AlarmMissionVM: BaseVM {
     }
     
     func saveMission(model: MissionModel) {
-        self.task.onNext(model)
+        self.task?.onNext(model)
         self.steps.accept(AppStep.closeAlarmMission)
     }
     
@@ -74,8 +75,8 @@ class AlarmMissionVM: BaseVM {
         let mission = selectedMission.wakeMission
         switch mission {
         case .Arithmetic:
-            let viewModel = AlarmMissionArithmeticVM()
-            viewModel.task.subscribe(onNext: { [weak self] in
+            let task = PublishSubject<MissionModel?>()
+            task.subscribe(onNext: { [weak self] in
                 guard let _self = self else { return }
                 if let model = $0 {
                     _self.saveMission(model: model)
@@ -83,11 +84,11 @@ class AlarmMissionVM: BaseVM {
                     _self.selectedItem.onNext(_self.initItem)
                 }
                 }).disposed(by: disposeBag)
-            self.steps.accept(AppStep.selectAlarmMissionArithmetic(viewModel: viewModel))
+            self.steps.accept(AppStep.selectAlarmMissionArithmetic(task: task))
             break
         case .Shake:
-            let viewModel = AlarmMissionShakeVM()
-            viewModel.task.subscribe(onNext: { [weak self] in
+            let task = PublishSubject<MissionModel?>()
+            task.subscribe(onNext: { [weak self] in
                 guard let _self = self else { return }
                 if let model = $0 {
                     _self.saveMission(model: model)
@@ -95,7 +96,7 @@ class AlarmMissionVM: BaseVM {
                     _self.selectedItem.onNext(_self.initItem)
                 }
                 }).disposed(by: disposeBag)
-            self.steps.accept(AppStep.selectAlarmMissionShake(viewModel: viewModel))
+            self.steps.accept(AppStep.selectAlarmMissionShake(task: task))
             break
         case .Base:
             let model = MissionModel.init(wakeMission: .Base, level: 0, numberOfTimes: 0)

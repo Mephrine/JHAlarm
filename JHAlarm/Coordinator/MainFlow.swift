@@ -11,7 +11,7 @@ import UIKit
 import RxFlow
 import RxCocoa
 import RxSwift
-import CocoaLumberjack
+import Swinject
 
 // 메인 네비게이션쪽 처리하는 Flow
 class MainFlow: Flow {
@@ -43,16 +43,16 @@ class MainFlow: Flow {
             return self.initMain()
         case .selectAlarmEdit(let alarmData):
             return self.naviToEditAlarm(alarmData)
-        case .clickNewAlarm(let viewModel):
-            return self.naviToNewAlarm(viewModel)
+        case .clickNewAlarm(let task):
+            return self.naviToNewAlarm(task)
         case .closeAlarmDetail:
             return self.naviPopAlarmDetail()
-        case .selectChoiceAlarmMission(let viewModel):
-            return naviToAlarmMission(viewModel)
-        case .selectChoiceAlarmSound(let viewModel):
-            return naviToAlarmSound(viewModel)
-        case .showAlarmMission(let viewModel):
-            return naviToAlarmMissionPlay(viewModel)
+        case .selectChoiceAlarmMission(let selected, let task):
+            return naviToAlarmMission(selected, task)
+        case .selectChoiceAlarmSound(let initSound, let task):
+            return naviToAlarmSound(initSound, task)
+        case .showAlarmMission(let alarmId, let task):
+            return naviToAlarmMissionPlay(alarmId, task)
         case .completeAlarmMission:
             return dismissToAlarmMissionPlay()
         default:
@@ -78,12 +78,7 @@ class MainFlow: Flow {
                 let settingVC   = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SettingVC") as? SettingVC {
                    
                 mainVC.viewControllers = [alarmVC, stopWatchVC, timerVC, settingVC]
-                
-//                return .multiple(flowContributors: [.contribute(withNextPresentable: alarmVC, withNextStepper: OneStepper(withSingleStep: alarmVC.viewModel)),
-//                .contribute(withNextPresentable: stopWatchVC, withNextStepper: OneStepper(withSingleStep: stopWatchVC.viewModel)) ,
-//                .contribute(withNextPresentable: timerVC, withNextStepper: OneStepper(withSingleStep: timerVC.viewModel)) ,
-//                .contribute(withNextPresentable: settingVC, withNextStepper: OneStepper(withSingleStep: settingVC.viewModel))])
-                return .multiple(flowContributors: [.contribute(withNextPresentable: alarmVC, withNextStepper: alarmVC.viewModel)])
+                return .multiple(flowContributors: [.contribute(withNextPresentable: alarmVC, withNextStepper: alarmVC.viewModel!)])
             }
         }
         
@@ -91,16 +86,22 @@ class MainFlow: Flow {
     }
 
     private func naviToEditAlarm(_ data: AlarmModel) -> FlowContributors {
-        let alarmDetailVC = AlarmDetailVC.instantiate(withViewModel: AlarmDetailVM(schedule: data), storyBoardName: "Main")
+        let container = Global.appDelegate.container
+        container.register(AlarmDetailVM.self) { _ in AlarmDetailVM(schedule: data) }
+        
+        let alarmDetailVC = AlarmDetailVC.instantiate(storyBoardName: "Main")
         rootViewController.hero.isEnabled = true
         rootViewController.hero.navigationAnimationType = .zoom
         self.rootViewController.pushViewController(alarmDetailVC, animated: true)
         
-        return .one(flowContributor: .contribute(withNextPresentable: alarmDetailVC, withNextStepper: alarmDetailVC.viewModel))
+        return .one(flowContributor: .contribute(withNextPresentable: alarmDetailVC, withNextStepper: alarmDetailVC.viewModel!))
     }
     
-    private func naviToNewAlarm(_ viewModel: AlarmDetailVM) -> FlowContributors {
-        let alarmDetailVC = AlarmDetailVC.instantiate(withViewModel: viewModel, storyBoardName: "Main")
+    private func naviToNewAlarm(_ task: PublishSubject<Bool>) -> FlowContributors {
+        let container = Global.appDelegate.container
+        container.register(AlarmDetailVM.self) { _ in AlarmDetailVM(schedule: nil, task: task) }
+        
+        let alarmDetailVC = AlarmDetailVC.instantiate(storyBoardName: "Main")
         rootViewController.hero.isEnabled = true
         rootViewController.hero.navigationAnimationType = .zoom
         self.rootViewController.pushViewController(alarmDetailVC, animated: true)
@@ -117,23 +118,29 @@ class MainFlow: Flow {
     }
     
     
-    private func naviToAlarmMission(_ viewModel: AlarmMissionVM) -> FlowContributors {
+    private func naviToAlarmMission(_ selected: MissionModel, _ task: PublishSubject<MissionModel>) -> FlowContributors {
         // flow
 //        let service = AlarmService(selectedMission: currentMission)
         
+        let container = Global.appDelegate.container
+        container.register(AlarmMissionVM.self) { _ in AlarmMissionVM(selected: selected, task: task) }
+        
         let missionFlow = AlarmMissionFlow()
         Flows.whenReady(flow1: missionFlow) { (root) in
             Async.main {
                 self.rootViewController.present(root, animated: true)
             }
         }
-        return .one(flowContributor: .contribute(withNextPresentable: missionFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selectChoiceAlarmMission(viewModel: viewModel))))
+        return .one(flowContributor: .contribute(withNextPresentable: missionFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selectChoiceAlarmMission(selected: selected, task: task))))
     }
     
-    private func naviToAlarmSound(_ viewModel: AlarmSoundVM) -> FlowContributors {
+    private func naviToAlarmSound(_ selected: AlarmSound, _ task: PublishSubject<AlarmSound>) -> FlowContributors {
         //flow
 //        let service = AlarmService(selectedSound: currentSound)
         
+        let container = Global.appDelegate.container
+        container.register(AlarmSoundVM.self) { _ in AlarmSoundVM(selected, task: task) }
+        
         let missionFlow = AlarmMissionFlow()
         Flows.whenReady(flow1: missionFlow) { (root) in
             Async.main {
@@ -141,12 +148,14 @@ class MainFlow: Flow {
             }
         }
         
-        return .one(flowContributor: .contribute(withNextPresentable: missionFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selectChoiceAlarmSound(viewModel: viewModel))))
+        return .one(flowContributor: .contribute(withNextPresentable: missionFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selectChoiceAlarmSound(initSound: selected, task: task))))
     }
     
-    private func naviToAlarmMissionPlay(_ viewModel: AlarmMissionPlayVM) -> FlowContributors {
-        //        let missionVC = AlarmMissionVC.instantiate(withViewModel: viewModel, storyBoardName: "Main")
-        let missionPlayVC = AlarmMissionPlayVC.instantiate(withViewModel: viewModel, storyBoardName: "Main")
+    private func naviToAlarmMissionPlay(_ alarmId: String, _ task: PublishSubject<MissionModel?>) -> FlowContributors {
+        let container = Global.appDelegate.container
+        container.register(AlarmMissionPlayVM.self) { _ in AlarmMissionPlayVM(alarmID: alarmId, task: task) }
+        
+        let missionPlayVC = AlarmMissionPlayVC.instantiate(storyBoardName: "Main")
         if let root = UIApplication.shared.windows.first!.rootViewController {
             root.present(missionPlayVC, animated: true)
         }

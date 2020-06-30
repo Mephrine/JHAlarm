@@ -36,7 +36,7 @@ class AlarmSoundVM: BaseVM {
     var selectedSound: BehaviorSubject<AlarmSound>      // 테이블내 사운드 선택
     
     // return Value
-    let task = PublishSubject<AlarmSound>()
+    let task: PublishSubject<AlarmSound>?
     
     // Output
     var soundData: Observable<[SoundSection]>  {   // 사운드 목록
@@ -50,8 +50,9 @@ class AlarmSoundVM: BaseVM {
     var audioPlayer: AVAudioPlayer?
     
     //OutPut
-    init(_ initSound: AlarmSound) {
+    init(_ initSound: AlarmSound, task: PublishSubject<AlarmSound>) {
         self.selectedSound = BehaviorSubject<AlarmSound>(value: initSound)
+        self.task = task
     }
     
     func selectSound(element: AlarmSound) {
@@ -129,8 +130,9 @@ class AlarmSoundVM: BaseVM {
             let selectedItem = try selectedSound.value()
             self.steps.accept(AppStep.closeAlarmSound)
             
-            self.task.onNext(selectedItem)
-        } catch {
+            self.task?.onNext(selectedItem)
+        } catch let e {
+            log.e("select sound error : \(e.localizedDescription)")
         }
     }
     
